@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
+import GlobalStyles from "../styles/GlobalStyles";
 
 const StyledAppLayout = styled.div`
   display: grid;
@@ -20,21 +21,24 @@ const Container = styled.div`
 `;
 
 const Main = styled.main`
-  background-color: #fff;
+  background-color: #f8f8f8;
   padding: 4rem 4.8rem 6.4rem;
   overflow: scroll;
 `;
 function AppLayout() {
   return (
-    <StyledAppLayout>
-      <Header />
-      <Sidebar />
-      <Main>
-        <Container>
-          <Outlet />
-        </Container>
-      </Main>
-    </StyledAppLayout>
+    <>
+      <GlobalStyles />
+      <StyledAppLayout>
+        <Header />
+        <Sidebar />
+        <Main>
+          <Container>
+            <Outlet />
+          </Container>
+        </Main>
+      </StyledAppLayout>
+    </>
   );
 }
 
