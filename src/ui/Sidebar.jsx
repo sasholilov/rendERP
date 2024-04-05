@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Logo from "./Logo";
+import { NavLink, Link } from "react-router-dom";
 import { TbFileInvoice } from "react-icons/tb";
 import { BiMoney } from "react-icons/bi";
 import { BiPurchaseTagAlt } from "react-icons/bi";
@@ -26,6 +27,10 @@ const MenuItemList = styled.ul`
   gap: 2rem;
   padding: 0;
   margin: 0;
+
+  & .active > li {
+    color: #6384ea;
+  }
 `;
 
 const MenuItem = styled.li`
@@ -52,36 +57,52 @@ const ItemName = styled.span`
 function Sidebar() {
   return (
     <StyledSidebar>
-      <Logo />
+      <Link to="/dashboard">
+        <Logo />
+      </Link>
       <MenuItemList>
-        <MenuItem>
-          <TbFileInvoice />
-          <ItemName>Invoicing</ItemName>
-        </MenuItem>
-        <MenuItem>
-          <BiMoney />
-          <ItemName>Sales</ItemName>
-        </MenuItem>
-        <MenuItem>
-          <BiPurchaseTagAlt />
-          <ItemName>Purchase</ItemName>
-        </MenuItem>
-        <MenuItem>
-          <BiBus />
-          <ItemName>Suppliers</ItemName>
-        </MenuItem>
-        <MenuItem>
-          <HiBuildingStorefront />
-          <ItemName>Outlets</ItemName>
-        </MenuItem>
-        <MenuItem>
-          <GoPeople />
-          <ItemName>HR</ItemName>
-        </MenuItem>
-        <MenuItem>
-          <FiSettings />
-          <ItemName>Settings</ItemName>
-        </MenuItem>
+        <NavLink to="/invoicing">
+          <MenuItem>
+            <TbFileInvoice />
+            <ItemName>Invoicing</ItemName>
+          </MenuItem>
+        </NavLink>
+        <NavLink to="/sale">
+          <MenuItem>
+            <BiMoney />
+            <ItemName>Sale</ItemName>
+          </MenuItem>
+        </NavLink>
+        <NavLink to="/purchase">
+          <MenuItem>
+            <BiPurchaseTagAlt />
+            <ItemName>Purchase</ItemName>
+          </MenuItem>
+        </NavLink>
+        <NavLink to="/suppliers">
+          <MenuItem>
+            <BiBus />
+            <ItemName>Suppliers</ItemName>
+          </MenuItem>
+        </NavLink>
+        <NavLink to="/outlets">
+          <MenuItem>
+            <HiBuildingStorefront />
+            <ItemName>Outlets</ItemName>
+          </MenuItem>
+        </NavLink>
+        <NavLink to="/hr">
+          <MenuItem>
+            <GoPeople />
+            <ItemName>HR</ItemName>
+          </MenuItem>
+        </NavLink>
+        <NavLink to="/settings">
+          <MenuItem>
+            <FiSettings />
+            <ItemName>Settings</ItemName>
+          </MenuItem>
+        </NavLink>
       </MenuItemList>
     </StyledSidebar>
   );

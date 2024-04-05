@@ -1,14 +1,13 @@
 import styled from "styled-components";
 
 const StyledHeader = styled.div`
-  background-color: grey;
+  background-color: #fefefe;
   padding: 1.2rem 4.8rem;
-  border-bottom: 1px solid grey;
-
   display: flex;
   gap: 2.4rem;
   align-items: center;
   justify-content: flex-end;
+  box-shadow: 0 -10px 6px -12px grey inset;
 `;
 
 function Header() {
