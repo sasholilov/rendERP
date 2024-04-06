@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const StyledTitle = styled.div`
   font-size: 18px;
   text-transform: uppercase;
-  color: #212121;
+  color: var(--color-grey-4);
   font-weight: 600;
   line-height: 28px;
 `;
