@@ -9,6 +9,7 @@ const StyledTable = styled.div`
   background-color: var(--color-light);
   border-radius: var(--border-radius-4);
   box-shadow: var(--box-shadow-1);
+  align-items: center;
   padding: 20px;
 `;
 

@@ -23,6 +23,8 @@ a {
         --color-grey-4: #424242;
         --color-blue-1:#6384ea;
         --color-blue-2:#1a233a;
+        --color-red-1:#f2385a;
+        --color-yellow-1: #f5d41e;
         --box-shadow-1: 0 2px 4px rgba(0, 0, 0, 0.1);
         --border-bottom:solid 1px rgba(0, 0, 0, 0.1);
         --border-radius-4:4px;
