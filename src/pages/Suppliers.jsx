@@ -1,7 +1,13 @@
 import Table from "../ui/Table";
+import Title from "../ui/Title";
 
 function Suppliers() {
-  return <Table />;
+  return (
+    <>
+      <Title>Suppliers</Title>
+      <Table />
+    </>
+  );
 }
 
 export default Suppliers;
