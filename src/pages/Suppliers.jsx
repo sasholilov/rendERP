@@ -1,5 +1,7 @@
+import Table from "../ui/Table";
+
 function Suppliers() {
-  return <div>Suppliers</div>;
+  return <Table />;
 }
 
 export default Suppliers;
