@@ -10,7 +10,7 @@ const StyledTable = styled.div`
   border-radius: var(--border-radius-4);
   box-shadow: var(--box-shadow-1);
   align-items: center;
-  padding: 20px;
+  padding: 0 20px 20px 20px;
 `;
 
 function Table({ children, gridTemplateColumns }) {

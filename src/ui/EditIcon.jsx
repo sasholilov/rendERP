@@ -8,6 +8,11 @@ const StyledEdit = styled.span`
   box-sizing: border-box;
   cursor: pointer;
   border-radius: var(--border-radius-4);
+  transition: 0.2s;
+
+  &:hover {
+    background-color: var(--color-yellow-2);
+  }
 `;
 
 function EditIcon() {

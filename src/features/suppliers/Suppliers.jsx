@@ -6,11 +6,19 @@ import DeleteIcon from "../../ui/DeleteIcon";
 import EditIcon from "../../ui/EditIcon";
 import styled from "styled-components";
 import { useSuppliers } from "./useSuppliers";
+import Button from "../../ui/Button";
 
 const StyledActions = styled.div`
   display: flex;
   gap: 4px;
   justify-content: center;
+`;
+
+const StyledHeaderBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 0;
+  margin: 0;
 `;
 
 function Suppliers() {
@@ -20,6 +28,9 @@ function Suppliers() {
   return (
     <>
       <Title>Suppliers</Title>
+      <StyledHeaderBar>
+        <Button type="add">+Add</Button>
+      </StyledHeaderBar>
       <Table gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr">
         <TableHeader>Company Name</TableHeader>
         <TableHeader>VAT</TableHeader>
