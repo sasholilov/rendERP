@@ -17,7 +17,7 @@ const Container = styled.div`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 0.1rem;
+  gap: 0.2rem;
 `;
 
 const Main = styled.main`
