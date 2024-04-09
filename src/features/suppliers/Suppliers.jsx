@@ -31,6 +31,26 @@ const StyledForm = styled.form`
   text-align: center;
 `;
 
+//const dataSup = {
+//  company_name: "new company",
+//  vat: 123123123,
+//  address: "dasdasdasdas",
+//  telephone: "0878526686",
+//  iban: "IBAN121221",
+//  country: "Slovenia",
+//};
+
+//const addNewSupplier = async function () {
+//  try {
+//    const data = await addEditSupplier(dataSup);
+//    console.log(data);
+//  } catch (error) {
+//    console.error(error);
+//  }
+//};
+
+//addNewSupplier();
+
 function Suppliers() {
   const { isLoading, suppliers } = useSuppliers();
   const [addMode, setAddMode] = useState(false);
@@ -40,7 +60,6 @@ function Suppliers() {
   return (
     <>
       <Title>Suppliers</Title>
-
       <StyledHeaderBar>
         <p>Search bar</p>
         <Button type={addModeButton} onClick={() => setAddMode(!addMode)}>
