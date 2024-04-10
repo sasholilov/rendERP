@@ -7,8 +7,11 @@ import EditIcon from "../../ui/EditIcon";
 import styled from "styled-components";
 import { useSuppliers } from "./useSuppliers";
 import Button from "../../ui/Button";
-import { useState } from "react";
 import SaveIcon from "../../ui/SaveIcon";
+import InputText from "../../ui/InputText";
+import { useAddSupplier } from "./useAddSupplier";
+import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 const StyledActions = styled.div`
   display: flex;
@@ -27,36 +30,41 @@ const StyledForm = styled.form`
   grid-column: 1 / span 7;
   align-items: center;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(221px, 1fr));
   text-align: center;
+  grid-auto-flow: row;
 `;
-
-//const dataSup = {
-//  company_name: "new company",
-//  vat: 123123123,
-//  address: "dasdasdasdas",
-//  telephone: "0878526686",
-//  iban: "IBAN121221",
-//  country: "Slovenia",
-//};
-
-//const addNewSupplier = async function () {
-//  try {
-//    const data = await addEditSupplier(dataSup);
-//    console.log(data);
-//  } catch (error) {
-//    console.error(error);
-//  }
-//};
-
-//addNewSupplier();
 
 function Suppliers() {
   const { isLoading, suppliers } = useSuppliers();
   const [addMode, setAddMode] = useState(false);
+  const [company_name, setCompany_name] = useState("");
+  const [vat, setVat] = useState("");
+  const [address, setAddress] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [iban, setIban] = useState("");
+  const [country, setCountry] = useState("");
+  const { isAdding, addSupplier } = useAddSupplier();
   const addModeButton = addMode === true ? "close" : "add";
   if (isLoading) return <p>Loading...</p>;
-  console.log(suppliers);
+
+  const handleSaveSupplier = function () {
+    const suplierObj = {
+      company_name,
+      vat,
+      address,
+      telephone,
+      iban,
+      country,
+    };
+    if (!company_name || !vat || !address || !telephone || !iban || !country) {
+      toast.error("Please fill all fields");
+      return;
+    }
+    if (isAdding) return <p>Loading....</p>;
+    addSupplier({ ...suplierObj });
+  };
+
   return (
     <>
       <Title>Suppliers</Title>
@@ -77,31 +85,55 @@ function Suppliers() {
         {addMode && (
           <StyledForm>
             <TableData>
-              <input type="text" placeholder="Company name" />
+              <InputText
+                type="text"
+                placeholder="Company Name"
+                onChange={(e) => setCompany_name(e.target.value)}
+              />
             </TableData>
             <TableData>
-              <input type="text" placeholder="VAT" />
+              <InputText
+                type="text"
+                placeholder="VAT"
+                onChange={(e) => setVat(e.target.value)}
+              />
             </TableData>
             <TableData>
-              <input type="text" placeholder="Country" />
+              <InputText
+                type="text"
+                placeholder="Country"
+                onChange={(e) => setCountry(e.target.value)}
+              />
             </TableData>
             <TableData>
-              <input type="text" placeholder="Address" />
+              <InputText
+                type="text"
+                placeholder="Address"
+                onChange={(e) => setAddress(e.target.value)}
+              />
             </TableData>
             <TableData>
-              <input type="text" placeholder="Telephone" />
+              <InputText
+                type="text"
+                placeholder="Telephone"
+                onChange={(e) => setTelephone(e.target.value)}
+              />
             </TableData>
             <TableData>
-              <input type="text" placeholder="IBAN" />
+              <InputText
+                type="text"
+                placeholder="IBAN"
+                onChange={(e) => setIban(e.target.value)}
+              />
             </TableData>
             <TableData>
-              <SaveIcon />
+              <SaveIcon onClick={handleSaveSupplier} />
             </TableData>
           </StyledForm>
         )}
 
         {suppliers.map((sup) => (
-          <>
+          <StyledForm key={sup.id}>
             <TableData key={sup.id}>{sup.company_name}</TableData>
             <TableData key={sup.id}>{sup.vat}</TableData>
             <TableData key={sup.id}>{sup.country}</TableData>
@@ -114,7 +146,7 @@ function Suppliers() {
                 <DeleteIcon />
               </StyledActions>
             </TableData>
-          </>
+          </StyledForm>
         ))}
       </Table>
     </>

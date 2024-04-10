@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { RiSave3Line } from "react-icons/ri";
+import PropTypes from "prop-types";
 
 const StyledSave = styled.span`
   background-color: var(--color-green-1);
@@ -15,12 +16,16 @@ const StyledSave = styled.span`
   }
 `;
 
-function SaveIcon() {
+function SaveIcon({ onClick }) {
   return (
     <StyledSave>
-      <RiSave3Line />
+      <RiSave3Line onClick={onClick} />
     </StyledSave>
   );
 }
+
+SaveIcon.propTypes = {
+  onClick: PropTypes.func,
+};
 
 export default SaveIcon;
