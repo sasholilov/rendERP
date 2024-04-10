@@ -10,7 +10,7 @@ import Button from "../../ui/Button";
 import SaveIcon from "../../ui/SaveIcon";
 import InputText from "../../ui/InputText";
 import { useAddSupplier } from "./useAddSupplier";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { toast } from "react-hot-toast";
 
 const StyledActions = styled.div`
@@ -35,7 +35,17 @@ const StyledForm = styled.form`
   grid-auto-flow: row;
 `;
 
+const StyledData = styled.div`
+  grid-column: 1 / span 7;
+  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(221px, 1fr));
+  text-align: center;
+  grid-auto-flow: row;
+`;
+
 function Suppliers() {
+  const ref = useRef();
   const { isLoading, suppliers } = useSuppliers();
   const [addMode, setAddMode] = useState(false);
   const [company_name, setCompany_name] = useState("");
@@ -48,7 +58,8 @@ function Suppliers() {
   const addModeButton = addMode === true ? "close" : "add";
   if (isLoading) return <p>Loading...</p>;
 
-  const handleSaveSupplier = function () {
+  function handleSaveSupplier(e) {
+    e.preventDefault();
     const suplierObj = {
       company_name,
       vat,
@@ -62,8 +73,14 @@ function Suppliers() {
       return;
     }
     if (isAdding) return <p>Loading....</p>;
-    addSupplier({ ...suplierObj });
-  };
+    addSupplier({ ...suplierObj }, { onSuccess: ref.current.reset() });
+    setAddress("");
+    setCompany_name("");
+    setVat("");
+    setIban("");
+    setTelephone("");
+    setCountry("");
+  }
 
   return (
     <>
@@ -83,7 +100,7 @@ function Suppliers() {
         <TableHeader>IBAN</TableHeader>
         <TableHeader>Actions</TableHeader>
         {addMode && (
-          <StyledForm>
+          <StyledForm ref={ref}>
             <TableData>
               <InputText
                 type="text"
@@ -127,13 +144,15 @@ function Suppliers() {
               />
             </TableData>
             <TableData>
-              <SaveIcon onClick={handleSaveSupplier} />
+              <Button type="save" onClick={(e) => handleSaveSupplier(e)}>
+                <SaveIcon />
+              </Button>
             </TableData>
           </StyledForm>
         )}
 
         {suppliers.map((sup) => (
-          <StyledForm key={sup.id}>
+          <StyledData key={sup.id}>
             <TableData key={sup.id}>{sup.company_name}</TableData>
             <TableData key={sup.id}>{sup.vat}</TableData>
             <TableData key={sup.id}>{sup.country}</TableData>
@@ -146,7 +165,7 @@ function Suppliers() {
                 <DeleteIcon />
               </StyledActions>
             </TableData>
-          </StyledForm>
+          </StyledData>
         ))}
       </Table>
     </>

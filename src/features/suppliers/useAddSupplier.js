@@ -8,7 +8,9 @@ export function useAddSupplier() {
     mutationFn: addEditSupplier,
     onSuccess: () => {
       toast.success("Supplier added successfully");
-      queryClient.invalidateQueries({ queryKey: ["suppliers"] });
+      queryClient.invalidateQueries({
+        queryKey: ["suppliers"],
+      });
     },
     onError: (err) => toast.error(err.message),
   });

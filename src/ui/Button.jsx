@@ -4,14 +4,22 @@ import PropTypes from "prop-types";
 const StyledButton = styled.button`
   color: var(--color-light);
   background-color: ${(props) =>
-    props.type === "add" ? `var(--color-skyblue-1)` : `var(--color-red-1)`};
+    props.type === "add"
+      ? `var(--color-skyblue-1)`
+      : props.type === "save"
+      ? "none"
+      : `var(--color-red-1)`};
   padding: 8px 16px;
   border-radius: var(--border-radius-8);
   cursor: pointer;
 
   &:hover {
     background-color: ${(props) =>
-      props.type === "add" ? `var(--color-skyblue-2)` : `var(--color-red-2)`};
+      props.type === "add"
+        ? `var(--color-skyblue-2)`
+        : props.type === "save"
+        ? "none"
+        : `var(--color-red-2)`};
   }
 `;
 
