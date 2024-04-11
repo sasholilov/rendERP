@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-const StyledTableData = styled.p`
+const StyledTableData = styled.div`
   color: var(--color-grey-4);
+  padding: 20px;
 `;
 
 function TableData({ children }) {

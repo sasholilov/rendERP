@@ -2,8 +2,6 @@ import Table from "../../ui/Table";
 import TableHeader from "../../ui/TableHeader";
 import TableData from "../../ui/TableData";
 import Title from "../../ui/Title";
-import DeleteIcon from "../../ui/DeleteIcon";
-import EditIcon from "../../ui/EditIcon";
 import styled from "styled-components";
 import { useSuppliers } from "./useSuppliers";
 import Button from "../../ui/Button";
@@ -12,36 +10,22 @@ import InputText from "../../ui/InputText";
 import { useAddSupplier } from "./useAddSupplier";
 import { useState, useRef } from "react";
 import { toast } from "react-hot-toast";
-
-const StyledActions = styled.div`
-  display: flex;
-  gap: 4px;
-  justify-content: center;
-`;
+import TableDataRow from "../../ui/TableDataRow";
 
 const StyledHeaderBar = styled.div`
   display: flex;
   justify-content: space-between;
   padding-bottom: 0;
   margin: 0;
+  margin-bottom: 10px;
 `;
 
 const StyledForm = styled.form`
-  grid-column: 1 / span 7;
+  grid-column: 1 / 7;
   align-items: center;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(221px, 1fr));
+  grid-template-columns: repeat(7, minmax(120px, 1fr));
   text-align: center;
-  grid-auto-flow: row;
-`;
-
-const StyledData = styled.div`
-  grid-column: 1 / span 7;
-  align-items: center;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(221px, 1fr));
-  text-align: center;
-  grid-auto-flow: row;
 `;
 
 function Suppliers() {
@@ -91,16 +75,18 @@ function Suppliers() {
           {addMode ? "End adding" : "Add new supplier"}
         </Button>
       </StyledHeaderBar>
-      <Table gridTemplateColumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr">
-        <TableHeader>Company Name</TableHeader>
-        <TableHeader>VAT</TableHeader>
-        <TableHeader>Country</TableHeader>
-        <TableHeader>Address</TableHeader>
-        <TableHeader>Telephone</TableHeader>
-        <TableHeader>IBAN</TableHeader>
-        <TableHeader>Actions</TableHeader>
+      <Table gridtemplatecolumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr">
+        <TableHeader columns={7}>
+          <p>Company Name</p>
+          <p>VAT</p>
+          <p>Country</p>
+          <p>Address</p>
+          <p>Telephone</p>
+          <p>IBAN</p>
+          <p>Actions</p>
+        </TableHeader>
         {addMode && (
-          <StyledForm ref={ref}>
+          <StyledForm ref={ref} columns={7}>
             <TableData>
               <InputText
                 type="text"
@@ -150,22 +136,19 @@ function Suppliers() {
             </TableData>
           </StyledForm>
         )}
-
         {suppliers.map((sup) => (
-          <StyledData key={sup.id}>
-            <TableData key={sup.id}>{sup.company_name}</TableData>
-            <TableData key={sup.id}>{sup.vat}</TableData>
-            <TableData key={sup.id}>{sup.country}</TableData>
-            <TableData key={sup.id}>{sup.address}</TableData>
-            <TableData key={sup.id}>{sup.telephone}</TableData>
-            <TableData key={sup.id}>{sup.iban}</TableData>
-            <TableData>
-              <StyledActions>
-                <EditIcon />
-                <DeleteIcon />
-              </StyledActions>
-            </TableData>
-          </StyledData>
+          <TableDataRow
+            columns={7}
+            key={sup.id}
+            resource={{
+              company_name: sup.company_name,
+              vat: sup.vat,
+              country: sup.country,
+              address: sup.address,
+              telephone: sup.telephone,
+              iban: sup.iban,
+            }}
+          />
         ))}
       </Table>
     </>

@@ -13,9 +13,9 @@ const StyledTable = styled.div`
   padding: 0 20px 20px 20px;
 `;
 
-function Table({ children, gridTemplateColumns }) {
+function Table({ children, gridtemplatecolumns }) {
   return (
-    <StyledTable gridTemplateColumns={gridTemplateColumns}>
+    <StyledTable gridtemplatecolumns={gridtemplatecolumns}>
       {children}
     </StyledTable>
   );
@@ -23,7 +23,7 @@ function Table({ children, gridTemplateColumns }) {
 
 Table.propTypes = {
   children: PropTypes.node.isRequired,
-  gridTemplateColumns: PropTypes.string,
+  gridtemplatecolumns: PropTypes.string,
 };
 
 export default Table;
