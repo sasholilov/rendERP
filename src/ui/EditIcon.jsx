@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { RiEditLine } from "react-icons/ri";
+import PropTypes from "prop-types";
 
 const StyledEdit = styled.span`
   background-color: var(--color-yellow-1);
@@ -15,12 +16,16 @@ const StyledEdit = styled.span`
   }
 `;
 
-function EditIcon() {
+function EditIcon({ onClick }) {
   return (
-    <StyledEdit>
+    <StyledEdit onClick={onClick}>
       <RiEditLine />
     </StyledEdit>
   );
 }
+
+EditIcon.propTypes = {
+  onClick: PropTypes.func,
+};
 
 export default EditIcon;

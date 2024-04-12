@@ -91,7 +91,7 @@ function Suppliers() {
           <p>Actions</p>
         </TableHeader>
         {addMode && (
-          <StyledForm ref={ref} columns={7}>
+          <StyledForm ref={ref}>
             <TableData>
               <InputText
                 type="text"
