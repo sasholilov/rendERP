@@ -46,18 +46,6 @@ function Suppliers() {
   const addModeButton = addMode === true ? "close" : "add";
   if (isLoading || isDeleting) return <p>Loading...</p>;
 
-  console.log(deleteSupp);
-  //
-  //  async function deleteTest(id) {
-  //    try {
-  //      await deleteSupplier(id);
-  //    } catch (error) {
-  //      console.log(error);
-  //    }
-  //  }
-  //
-  //  deleteTest(332);
-  //
   function handleSaveSupplier(e) {
     e.preventDefault();
     const suplierObj = {
