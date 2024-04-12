@@ -6,11 +6,14 @@ import styled from "styled-components";
 import { useSuppliers } from "./useSuppliers";
 import Button from "../../ui/Button";
 import SaveIcon from "../../ui/SaveIcon";
+import DeleteIcon from "../../ui/DeleteIcon";
+import EditIcon from "../../ui/EditIcon";
 import InputText from "../../ui/InputText";
 import { useAddSupplier } from "./useAddSupplier";
 import { useState, useRef } from "react";
 import { toast } from "react-hot-toast";
 import TableDataRow from "../../ui/TableDataRow";
+import { useDeleteSupplier } from "./useDeleteSupplier";
 
 const StyledHeaderBar = styled.div`
   display: flex;
@@ -31,6 +34,7 @@ const StyledForm = styled.form`
 function Suppliers() {
   const ref = useRef();
   const { isLoading, suppliers } = useSuppliers();
+  const { isDeleting, deleteSupp } = useDeleteSupplier();
   const [addMode, setAddMode] = useState(false);
   const [company_name, setCompany_name] = useState("");
   const [vat, setVat] = useState("");
@@ -40,8 +44,20 @@ function Suppliers() {
   const [country, setCountry] = useState("");
   const { isAdding, addSupplier } = useAddSupplier();
   const addModeButton = addMode === true ? "close" : "add";
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading || isDeleting) return <p>Loading...</p>;
 
+  console.log(deleteSupp);
+  //
+  //  async function deleteTest(id) {
+  //    try {
+  //      await deleteSupplier(id);
+  //    } catch (error) {
+  //      console.log(error);
+  //    }
+  //  }
+  //
+  //  deleteTest(332);
+  //
   function handleSaveSupplier(e) {
     e.preventDefault();
     const suplierObj = {
@@ -52,6 +68,7 @@ function Suppliers() {
       iban,
       country,
     };
+
     if (!company_name || !vat || !address || !telephone || !iban || !country) {
       toast.error("Please fill all fields");
       return;
@@ -138,8 +155,8 @@ function Suppliers() {
         )}
         {suppliers.map((sup) => (
           <TableDataRow
-            columns={7}
             key={sup.id}
+            columns={7}
             resource={{
               company_name: sup.company_name,
               vat: sup.vat,
@@ -148,7 +165,10 @@ function Suppliers() {
               telephone: sup.telephone,
               iban: sup.iban,
             }}
-          />
+          >
+            <EditIcon />
+            <DeleteIcon onClick={() => deleteSupp(sup.id)} />
+          </TableDataRow>
         ))}
       </Table>
     </>

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import PropTypes from "prop-types";
 
 const StyledDelete = styled.span`
   background-color: var(--color-red-1);
@@ -15,12 +16,16 @@ const StyledDelete = styled.span`
   }
 `;
 
-function DeleteIcon() {
+function DeleteIcon({ onClick }) {
   return (
-    <StyledDelete>
+    <StyledDelete onClick={onClick}>
       <RiDeleteBin6Line />
     </StyledDelete>
   );
 }
+
+DeleteIcon.propTypes = {
+  onClick: PropTypes.func,
+};
 
 export default DeleteIcon;

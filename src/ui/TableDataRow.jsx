@@ -1,5 +1,3 @@
-import DeleteIcon from "./DeleteIcon";
-import EditIcon from "./EditIcon";
 import TableData from "./TableData";
 import styled from "styled-components";
 import PropTypes from "prop-types";
@@ -20,17 +18,14 @@ const StyledData = styled.div`
   text-align: center;
 `;
 
-function TableDataRow({ resource, columns }) {
+function TableDataRow({ resource, columns, children }) {
   return (
     <StyledData columns={columns}>
       {Object.keys(resource).map((key) => (
         <TableData key={key}>{resource[key]}</TableData>
       ))}
       <TableData>
-        <StyledActions>
-          <EditIcon />
-          <DeleteIcon />
-        </StyledActions>
+        <StyledActions>{children}</StyledActions>
       </TableData>
     </StyledData>
   );
@@ -39,6 +34,7 @@ function TableDataRow({ resource, columns }) {
 TableDataRow.propTypes = {
   resource: PropTypes.object,
   columns: PropTypes.number,
+  children: PropTypes.node.isRequired,
 };
 
 export default TableDataRow;

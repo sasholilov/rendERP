@@ -14,6 +14,20 @@ export async function getSuppliers() {
   return data;
 }
 
+export async function deleteSupplier(id) {
+  const { data, error } = await supabase
+    .from('suppliers')
+    .delete()
+    .eq('id', id)
+  if (error) {
+    console.log(error);
+    throw new Error("There is an error deleting the supplier")
+  }
+
+  return data;
+
+}
+
 export async function addEditSupplier(newSupplier, id) {
   let query = supabase.from("suppliers");
 
