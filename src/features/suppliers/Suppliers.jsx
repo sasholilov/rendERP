@@ -14,6 +14,7 @@ import { useState, useRef } from "react";
 import { toast } from "react-hot-toast";
 import TableDataRow from "../../ui/TableDataRow";
 import { useDeleteSupplier } from "./useDeleteSupplier";
+import EditSupplier from "./EditSupplier";
 
 const StyledHeaderBar = styled.div`
   display: flex;
@@ -36,12 +37,14 @@ function Suppliers() {
   const { isLoading, suppliers } = useSuppliers();
   const { isDeleting, deleteSupp } = useDeleteSupplier();
   const [addMode, setAddMode] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const [company_name, setCompany_name] = useState("");
   const [vat, setVat] = useState("");
   const [address, setAddress] = useState("");
   const [telephone, setTelephone] = useState("");
   const [iban, setIban] = useState("");
   const [country, setCountry] = useState("");
+  const [objectToEdit, setObjectToEdit] = useState({});
   const { isAdding, addSupplier } = useAddSupplier();
   const addModeButton = addMode === true ? "close" : "add";
   if (isLoading || isDeleting) return <p>Loading...</p>;
@@ -71,6 +74,13 @@ function Suppliers() {
     setCountry("");
   }
 
+  function handleEditSupplier(id) {
+    const objectToEditToState = suppliers.find(
+      (supplier) => supplier.id === id
+    );
+    setObjectToEdit(objectToEditToState);
+    setEditMode(!editMode);
+  }
   return (
     <>
       <Title>Suppliers</Title>
@@ -90,6 +100,7 @@ function Suppliers() {
           <p>IBAN</p>
           <p>Actions</p>
         </TableHeader>
+
         {addMode && (
           <StyledForm ref={ref}>
             <TableData>
@@ -141,6 +152,9 @@ function Suppliers() {
             </TableData>
           </StyledForm>
         )}
+        {editMode && (
+          <EditSupplier objecToEdit={objectToEdit} idToSave={objectToEdit.id} />
+        )}
         {suppliers.map((sup) => (
           <TableDataRow
             key={sup.id}
@@ -154,7 +168,7 @@ function Suppliers() {
               iban: sup.iban,
             }}
           >
-            <EditIcon />
+            <EditIcon onClick={() => handleEditSupplier(sup.id)} />
             <DeleteIcon onClick={() => deleteSupp(sup.id)} />
           </TableDataRow>
         ))}

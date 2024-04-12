@@ -1,13 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addSupplier as addSupplierApi } from "../../services/apiSuppliers";
 import { toast } from "react-hot-toast";
+import { editSupplier as editSupplierApi } from "../../services/apiSuppliers";
 
-export function useAddSupplier() {
+export function useEditSupplier() {
   const queryClient = useQueryClient();
-  const { mutate: addSupplier, isLoading: isAdding } = useMutation({
-    mutationFn: addSupplierApi,
+  const { mutate: editSupplier, isLoading: isEditing } = useMutation({
+    mutationFn: editSupplierApi,
     onSuccess: () => {
-      toast.success("Supplier added successfully");
+      toast.success("Supplier edited successfully");
       queryClient.invalidateQueries({
         queryKey: ["suppliers"],
       });
@@ -15,5 +15,5 @@ export function useAddSupplier() {
     onError: (err) => toast.error(err.message),
   });
 
-  return { isAdding, addSupplier };
+  return { editSupplier, isEditing };
 }

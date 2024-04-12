@@ -14,7 +14,7 @@ const StyledInput = styled.input.attrs({ type: "text" })`
 function InputText({ type, placeholder, onChange, value }) {
   return (
     <StyledInput
-      value={value}
+      defaultValue={value}
       type={type}
       placeholder={placeholder}
       onChange={onChange}
