@@ -37,7 +37,7 @@ function EditSupplier({ objecToEdit, id }) {
 
     console.log("CHECK THE VAALUES", objectToSave, id);
 
-    editSupplier(objectToSave, id);
+    editSupplier({ objectToSave, id });
   }
 
   if (isEditing) return <p>Loading....</p>;

@@ -5,7 +5,7 @@ import { editSupplier as editSupplierApi } from "../../services/apiSuppliers";
 export function useEditSupplier() {
   const queryClient = useQueryClient();
   const { mutate: editSupplier, isLoading: isEditing } = useMutation({
-    mutationFn: editSupplierApi,
+    mutationFn: ({ objectToSave, id }) => editSupplierApi(objectToSave, id),
     onSuccess: () => {
       toast.success("Supplier edited successfully");
       queryClient.invalidateQueries({
