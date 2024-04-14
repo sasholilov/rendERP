@@ -153,7 +153,11 @@ function Suppliers() {
           </StyledForm>
         )}
         {editMode && (
-          <EditSupplier objecToEdit={objectToEdit} idToSave={objectToEdit.id} />
+          <EditSupplier
+            objecToEdit={objectToEdit}
+            idToSave={objectToEdit.id}
+            setEditMode={setEditMode}
+          />
         )}
         {suppliers.map((sup) => (
           <TableDataRow

@@ -15,7 +15,7 @@ const StyledForm = styled.form`
   text-align: center;
 `;
 
-function EditSupplier({ objecToEdit, id }) {
+function EditSupplier({ objecToEdit, id, setEditMode }) {
   const { isEditing, editSupplier } = useEditSupplier();
   const [company_name, setCompany_name] = useState(objecToEdit?.company_name);
   const [vat, setVat] = useState(objecToEdit?.vat);
@@ -35,9 +35,8 @@ function EditSupplier({ objecToEdit, id }) {
       country,
     };
 
-    console.log("CHECK THE VAALUES", objectToSave, id);
-
     editSupplier({ objectToSave, id });
+    setEditMode(false);
   }
 
   if (isEditing) return <p>Loading....</p>;
@@ -108,6 +107,7 @@ function EditSupplier({ objecToEdit, id }) {
 EditSupplier.propTypes = {
   objecToEdit: PropTypes.object,
   id: PropTypes.number,
+  setEditMode: PropTypes.func,
 };
 
 export default EditSupplier;
