@@ -14,6 +14,5 @@ export function useAddSupplier() {
     },
     onError: (err) => toast.error(err.message),
   });
-
   return { isAdding, addSupplier };
 }

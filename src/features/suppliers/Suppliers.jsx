@@ -36,6 +36,7 @@ function Suppliers() {
     setObjectToEdit(objectToEditToState);
     setEditMode(!editMode);
   }
+
   return (
     <>
       <Title>Suppliers</Title>
@@ -56,7 +57,6 @@ function Suppliers() {
           <p>Actions</p>
         </TableHeader>
 
-        {addMode && <AddSupplier />}
         {editMode && (
           <EditSupplier
             objecToEdit={objectToEdit}
@@ -64,23 +64,27 @@ function Suppliers() {
             setEditMode={setEditMode}
           />
         )}
-        {suppliers.map((sup) => (
-          <TableDataRow
-            key={sup.id}
-            columns={7}
-            resource={{
-              company_name: sup.company_name,
-              vat: sup.vat,
-              country: sup.country,
-              address: sup.address,
-              telephone: sup.telephone,
-              iban: sup.iban,
-            }}
-          >
-            <EditIcon onClick={() => handleEditSupplier(sup.id)} />
-            <DeleteIcon onClick={() => deleteSupp(sup.id)} />
-          </TableDataRow>
-        ))}
+
+        {!editMode && addMode && <AddSupplier />}
+
+        {!editMode &&
+          suppliers.map((sup) => (
+            <TableDataRow
+              key={sup.id}
+              columns={7}
+              resource={{
+                company_name: sup.company_name,
+                vat: sup.vat,
+                country: sup.country,
+                address: sup.address,
+                telephone: sup.telephone,
+                iban: sup.iban,
+              }}
+            >
+              <EditIcon onClick={() => handleEditSupplier(sup.id)} />
+              <DeleteIcon onClick={() => deleteSupp(sup.id)} />
+            </TableDataRow>
+          ))}
       </Table>
     </>
   );

@@ -10,6 +10,5 @@ export function useSuppliers() {
     queryKey: ["suppliers"],
     queryFn: getSuppliers,
   });
-
   return { isLoading, error, suppliers };
 }

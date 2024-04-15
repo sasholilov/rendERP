@@ -8,8 +8,10 @@ const StyledButton = styled.button`
       ? `var(--color-skyblue-1)`
       : props.type === "save"
       ? "none"
+      : props.type === "cancel"
+      ? "none"
       : `var(--color-red-1)`};
-  padding: 8px 16px;
+  padding: ${(props) => (props.type === "save" ? `4px` : `8px 16px`)};
   border-radius: var(--border-radius-8);
   cursor: pointer;
 
@@ -18,6 +20,8 @@ const StyledButton = styled.button`
       props.type === "add"
         ? `var(--color-skyblue-2)`
         : props.type === "save"
+        ? "none"
+        : props.type === "cancel"
         ? "none"
         : `var(--color-red-2)`};
   }

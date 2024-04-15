@@ -14,6 +14,5 @@ export function useEditSupplier() {
     },
     onError: (err) => toast.error(err.message),
   });
-
   return { editSupplier, isEditing };
 }
