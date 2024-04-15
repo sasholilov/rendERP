@@ -1,17 +1,26 @@
 import supabase from "./supabase";
+import { PAGE_SIZE } from "../utils/constants";
 
-export async function getSuppliers() {
-  const { data, error } = await supabase
+export async function getSuppliers(page) {
+  let query = supabase
     .from("suppliers")
-    .select("*")
+    .select("*", { count: "exact" })
     .order("created_at", { ascending: false });
+
+  if (page) {
+    const from = (page - 1) * PAGE_SIZE;
+    const to = from + PAGE_SIZE - 1;
+    query = query.range(from, to);
+  }
+
+  const { data, error, count } = await query;
 
   if (error) {
     console.log(error);
     throw new Error("Suppliers could not be loaded");
   }
 
-  return data;
+  return { data, count };
 }
 
 export async function deleteSupplier(id) {

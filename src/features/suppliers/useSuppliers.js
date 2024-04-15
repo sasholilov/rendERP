@@ -1,14 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import { getSuppliers } from "../../services/apiSuppliers";
+import { useSearchParams } from "react-router-dom";
 
 export function useSuppliers() {
-  const {
-    isLoading,
-    data: suppliers,
-    error,
-  } = useQuery({
-    queryKey: ["suppliers"],
-    queryFn: getSuppliers,
+  const [searchParams] = useSearchParams();
+  const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
+  console.log(page);
+  const { isLoading, data, error } = useQuery({
+    queryKey: ["suppliers", page],
+    queryFn: () => getSuppliers(page),
   });
-  return { isLoading, error, suppliers };
+
+  const suppliers = data?.data || [];
+  const count = data?.count || 0;
+
+  return { isLoading, error, suppliers, count };
 }

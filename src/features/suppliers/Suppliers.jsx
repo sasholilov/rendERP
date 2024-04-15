@@ -11,6 +11,7 @@ import TableDataRow from "../../ui/TableDataRow";
 import { useDeleteSupplier } from "./useDeleteSupplier";
 import EditSupplier from "./EditSupplier";
 import AddSupplier from "./AddSupplier";
+import Pagination from "../../ui/Pagination";
 
 const StyledHeaderBar = styled.div`
   display: flex;
@@ -21,12 +22,13 @@ const StyledHeaderBar = styled.div`
 `;
 
 function Suppliers() {
-  const { isLoading, suppliers } = useSuppliers();
+  const { isLoading, suppliers, count } = useSuppliers();
   const { isDeleting, deleteSupp } = useDeleteSupplier();
   const [addMode, setAddMode] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [objectToEdit, setObjectToEdit] = useState({});
   const addModeButton = addMode === true ? "close" : "add";
+
   if (isLoading || isDeleting) return <p>Loading...</p>;
 
   function handleEditSupplier(id) {
@@ -86,6 +88,7 @@ function Suppliers() {
             </TableDataRow>
           ))}
       </Table>
+      <Pagination count={count} />
     </>
   );
 }
