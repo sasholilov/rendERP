@@ -12,9 +12,9 @@ const StyledPagination = styled.div`
 `;
 
 const P = styled.p`
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   margin-left: 0.8rem;
-
+  color: var(--color-grey-3);
   & span {
     font-weight: 600;
   }
@@ -27,12 +27,12 @@ const Buttons = styled.div`
 
 const PaginationButton = styled.button`
   background-color: ${(props) =>
-    props.active ? " var(--color-brand-600)" : "var(--color-grey-50)"};
-  color: ${(props) => (props.active ? " var(--color-brand-50)" : "inherit")};
+    props.active ? " var(--color-grey-1)" : "var(--color-grey-2)"};
+  color: ${(props) => (props.active ? " var(--color-grey-1)" : "inherit")};
   border: none;
-  border-radius: var(--border-radius-sm);
+  border-radius: var(--border-radius-4);
   font-weight: 500;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 
   display: flex;
   align-items: center;
@@ -43,10 +43,12 @@ const PaginationButton = styled.button`
 
   &:has(span:last-child) {
     padding-left: 0.4rem;
+    color: var(--color-grey-3);
   }
 
   &:has(span:first-child) {
     padding-right: 0.4rem;
+    color: var(--color-grey-3);
   }
 
   & svg {
@@ -56,7 +58,7 @@ const PaginationButton = styled.button`
 
   &:hover:not(:disabled) {
     background-color: var(--color-brand-600);
-    color: var(--color-brand-50);
+    color: var(--color-grey-4);
   }
 `;
 
@@ -84,9 +86,9 @@ function Pagination({ count }) {
   return (
     <StyledPagination>
       <P>
-        Showing <span>{(currentPage - 1) * PAGE_SIZE + 1}</span> to
+        Showing <span>{(currentPage - 1) * PAGE_SIZE + 1}</span> to{" "}
         <span>
-          {currentPage === pageCount ? count : currentPage * PAGE_SIZE}
+          {currentPage === pageCount ? count : currentPage * PAGE_SIZE}{" "}
         </span>
         of <span>{count}</span> results
       </P>
