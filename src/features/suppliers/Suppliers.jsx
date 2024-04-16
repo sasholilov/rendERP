@@ -12,6 +12,7 @@ import { useDeleteSupplier } from "./useDeleteSupplier";
 import EditSupplier from "./EditSupplier";
 import AddSupplier from "./AddSupplier";
 import Pagination from "../../ui/Pagination";
+import InputText from "../../ui/InputText";
 
 const StyledHeaderBar = styled.div`
   display: flex;
@@ -24,6 +25,7 @@ const StyledHeaderBar = styled.div`
 function Suppliers() {
   const { isLoading, suppliers, count } = useSuppliers();
   const { isDeleting, deleteSupp } = useDeleteSupplier();
+  const [searchQuery, setSearchQuery] = useState("");
   const [addMode, setAddMode] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [objectToEdit, setObjectToEdit] = useState({});
@@ -39,15 +41,25 @@ function Suppliers() {
     setEditMode(!editMode);
   }
 
+  function handleSearch(e) {
+    setSearchQuery(e.target.value);
+  }
+
   return (
     <>
       <Title>Suppliers</Title>
-      <StyledHeaderBar>
-        <p>Search bar</p>
-        <Button type={addModeButton} onClick={() => setAddMode(!addMode)}>
-          {addMode ? "End adding" : "Add new supplier"}
-        </Button>
-      </StyledHeaderBar>
+      {!editMode && (
+        <StyledHeaderBar>
+          <InputText
+            placeholder="Search..."
+            onChange={(e) => handleSearch(e)}
+          />
+          <p>{searchQuery}</p>
+          <Button type={addModeButton} onClick={() => setAddMode(!addMode)}>
+            {addMode ? "End adding" : "Add new supplier"}
+          </Button>
+        </StyledHeaderBar>
+      )}
       <Table gridtemplatecolumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr">
         <TableHeader columns={7}>
           <p>Company Name</p>
