@@ -23,6 +23,16 @@ const StyledHeaderBar = styled.div`
   margin-bottom: 10px;
 `;
 
+const SearchBar = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+
+const StyledResultTitle = styled.h3`
+  text-align: center;
+  color: var(--color-grey-4);
+`;
+
 function Suppliers() {
   const { isLoading, suppliers, count } = useSuppliers();
   const { isDeleting, deleteSupp } = useDeleteSupplier();
@@ -66,16 +76,29 @@ function Suppliers() {
       <Title>Suppliers</Title>
       {!editMode && (
         <StyledHeaderBar>
-          <InputText placeholder="Search..." />
-          <Button onClick={(e) => handleSearch(e)}>Search</Button>
-          <Button onClick={() => setSearchQuery("")}>Clear</Button>
-          {searchQuery && <p>Results from search type {searchQuery}</p>}
+          <SearchBar>
+            <InputText placeholder="Search..." />
+            <Button type="add" onClick={(e) => handleSearch(e)}>
+              Search
+            </Button>
+            {searchQuery && (
+              <Button onClick={() => setSearchQuery("")}>Clear</Button>
+            )}
+          </SearchBar>
           <Button type={addModeButton} onClick={() => setAddMode(!addMode)}>
             {addMode ? "End adding" : "Add new supplier"}
           </Button>
         </StyledHeaderBar>
       )}
       {!suppliers.length && <h1>No Suppliers to show</h1>}
+      {searchQuery && (
+        <StyledResultTitle>
+          {`Founded (${suppliers.length}) ${
+            suppliers.length > 1 ? `results` : `result`
+          } from search keyword
+          "${searchQuery}"`}
+        </StyledResultTitle>
+      )}
       <Table gridtemplatecolumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr">
         <TableHeader columns={7}>
           <p>Company Name</p>
@@ -86,7 +109,6 @@ function Suppliers() {
           <p>IBAN</p>
           <p>Actions</p>
         </TableHeader>
-
         {editMode && (
           <EditSupplier
             objecToEdit={objectToEdit}
