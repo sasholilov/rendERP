@@ -6,13 +6,14 @@ import { useSuppliers } from "./useSuppliers";
 import Button from "../../ui/Button";
 import DeleteIcon from "../../ui/DeleteIcon";
 import EditIcon from "../../ui/EditIcon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TableDataRow from "../../ui/TableDataRow";
 import { useDeleteSupplier } from "./useDeleteSupplier";
 import EditSupplier from "./EditSupplier";
 import AddSupplier from "./AddSupplier";
 import Pagination from "../../ui/Pagination";
 import InputText from "../../ui/InputText";
+import { useSearchParams } from "react-router-dom";
 
 const StyledHeaderBar = styled.div`
   display: flex;
@@ -25,11 +26,24 @@ const StyledHeaderBar = styled.div`
 function Suppliers() {
   const { isLoading, suppliers, count } = useSuppliers();
   const { isDeleting, deleteSupp } = useDeleteSupplier();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
   const [addMode, setAddMode] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [objectToEdit, setObjectToEdit] = useState({});
   const addModeButton = addMode === true ? "close" : "add";
+
+  useEffect(() => {
+    if (searchQuery) {
+      searchParams.set("search", searchQuery);
+      setSearchParams(searchParams);
+      console.log(searchParams);
+    }
+    if (searchQuery === "") {
+      searchParams.delete("search");
+      setSearchParams(searchParams);
+    }
+  }, [searchQuery, searchParams, setSearchParams]);
 
   if (isLoading || isDeleting) return <p>Loading...</p>;
 
@@ -42,7 +56,8 @@ function Suppliers() {
   }
 
   function handleSearch(e) {
-    setSearchQuery(e.target.value);
+    console.log(e);
+    setSearchQuery(e.target.previousElementSibling.value);
   }
 
   return (
@@ -50,11 +65,10 @@ function Suppliers() {
       <Title>Suppliers</Title>
       {!editMode && (
         <StyledHeaderBar>
-          <InputText
-            placeholder="Search..."
-            onChange={(e) => handleSearch(e)}
-          />
-          <p>{searchQuery}</p>
+          <InputText placeholder="Search..." />
+          <Button onClick={(e) => handleSearch(e)}>Search</Button>
+          <Button onClick={() => setSearchQuery("")}>Clear</Button>
+          {searchQuery && <p>Results from search type {searchQuery}</p>}
           <Button type={addModeButton} onClick={() => setAddMode(!addMode)}>
             {addMode ? "End adding" : "Add new supplier"}
           </Button>

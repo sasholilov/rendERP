@@ -5,9 +5,10 @@ import { useSearchParams } from "react-router-dom";
 export function useSuppliers() {
   const [searchParams] = useSearchParams();
   const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
+  const searchQuery = searchParams.get("search");
   const { isLoading, data, error } = useQuery({
-    queryKey: ["suppliers", page],
-    queryFn: () => getSuppliers(page),
+    queryKey: ["suppliers", page, searchQuery],
+    queryFn: () => getSuppliers({ page, searchQuery }),
   });
 
   const suppliers = data?.data || [];

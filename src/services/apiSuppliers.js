@@ -1,11 +1,18 @@
 import supabase from "./supabase";
 import { PAGE_SIZE } from "../utils/constants";
 
-export async function getSuppliers(page) {
+export async function getSuppliers({ page, searchQuery }) {
   let query = supabase
     .from("suppliers")
     .select("*", { count: "exact" })
     .order("created_at", { ascending: false });
+
+  if (searchQuery) {
+    //query = query.rpc("search_suppliers", { keyword: "[queryWord]" });
+    query = query.ilike("combine_columns_correct", `%${searchQuery}%`, {
+      type: "websearch",
+    });
+  }
 
   if (page) {
     const from = (page - 1) * PAGE_SIZE;
