@@ -75,6 +75,7 @@ function Suppliers() {
           </Button>
         </StyledHeaderBar>
       )}
+      {!suppliers.length && <h1>No Suppliers to show</h1>}
       <Table gridtemplatecolumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr">
         <TableHeader columns={7}>
           <p>Company Name</p>
