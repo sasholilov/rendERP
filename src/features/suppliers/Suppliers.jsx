@@ -56,8 +56,9 @@ function Suppliers() {
   }
 
   function handleSearch(e) {
-    console.log(e);
     setSearchQuery(e.target.previousElementSibling.value);
+    if (searchParams.get("page")) searchParams.set("page", 1);
+    setSearchParams(searchParams);
   }
 
   return (
