@@ -12,8 +12,9 @@ import { useDeleteSupplier } from "./useDeleteSupplier";
 import EditSupplier from "./EditSupplier";
 import AddSupplier from "./AddSupplier";
 import Pagination from "../../ui/Pagination";
-import InputText from "../../ui/InputText";
+
 import { useSearchParams } from "react-router-dom";
+import Search from "../../ui/Search";
 
 const StyledHeaderBar = styled.div`
   display: flex;
@@ -21,11 +22,6 @@ const StyledHeaderBar = styled.div`
   padding-bottom: 0;
   margin: 0;
   margin-bottom: 10px;
-`;
-
-const SearchBar = styled.div`
-  display: flex;
-  gap: 1rem;
 `;
 
 const StyledResultTitle = styled.h3`
@@ -65,32 +61,17 @@ function Suppliers() {
     setEditMode(!editMode);
   }
 
-  function handleSearch(e) {
-    setSearchQuery(e.target.previousElementSibling.value);
-    if (searchParams.get("page")) searchParams.set("page", 1);
-    setSearchParams(searchParams);
-  }
-
   return (
     <>
       <Title>Suppliers</Title>
       {!editMode && (
         <StyledHeaderBar>
-          <SearchBar>
-            <InputText placeholder="Search..." />
-            <Button type="add" onClick={(e) => handleSearch(e)}>
-              Search
-            </Button>
-            {searchQuery && (
-              <Button onClick={() => setSearchQuery("")}>Clear</Button>
-            )}
-          </SearchBar>
+          <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
           <Button type={addModeButton} onClick={() => setAddMode(!addMode)}>
             {addMode ? "End adding" : "Add new supplier"}
           </Button>
         </StyledHeaderBar>
       )}
-      {!suppliers.length && <h1>No Suppliers to show</h1>}
       {searchQuery && (
         <StyledResultTitle>
           {`Founded (${suppliers.length}) ${

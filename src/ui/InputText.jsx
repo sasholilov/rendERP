@@ -11,13 +11,14 @@ const StyledInput = styled.input.attrs({ type: "text" })`
   cursor: text !important;
 `;
 
-function InputText({ type, placeholder, onChange, value }) {
+function InputText({ type, placeholder, onChange, value, onKeyDown }) {
   return (
     <StyledInput
       defaultValue={value}
       type={type}
       placeholder={placeholder}
       onChange={onChange}
+      onKeyDown={onKeyDown}
     />
   );
 }
@@ -27,6 +28,7 @@ InputText.propTypes = {
   placeholder: PropTypes.string,
   onChange: PropTypes.func,
   value: PropTypes.string,
+  onKeyDown: PropTypes.func,
 };
 
 export default InputText;
