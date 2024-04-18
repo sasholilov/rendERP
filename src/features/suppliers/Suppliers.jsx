@@ -15,6 +15,7 @@ import Pagination from "../../ui/Pagination";
 
 import { useSearchParams } from "react-router-dom";
 import Search from "../../ui/Search";
+import Spinner from "./Spinner";
 
 const StyledHeaderBar = styled.div`
   display: flex;
@@ -51,7 +52,7 @@ function Suppliers() {
     }
   }, [searchQuery, searchParams, setSearchParams]);
 
-  if (isLoading || isDeleting) return <p>Loading...</p>;
+  if (isLoading || isDeleting) return <Spinner />;
 
   function handleEditSupplier(id) {
     const objectToEditToState = suppliers.find(
@@ -64,6 +65,7 @@ function Suppliers() {
   return (
     <>
       <Title>Suppliers</Title>
+
       {!editMode && (
         <StyledHeaderBar>
           <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
