@@ -62,6 +62,19 @@ function Suppliers() {
     setEditMode(!editMode);
   }
 
+  function handleDelete(suppId) {
+    if (window.confirm("Are you sure?")) deleteSupp(suppId);
+  }
+
+  if (suppliers.length === 0)
+    return (
+      <>
+        <StyledResultTitle>
+          You do not have any suppliers! Add a new supplier from the form below.
+        </StyledResultTitle>
+        <AddSupplier />
+      </>
+    );
   return (
     <>
       <Title>Suppliers</Title>
@@ -117,11 +130,11 @@ function Suppliers() {
               }}
             >
               <EditIcon onClick={() => handleEditSupplier(sup.id)} />
-              <DeleteIcon onClick={() => deleteSupp(sup.id)} />
+              <DeleteIcon onClick={() => handleDelete(sup.id)} />
             </TableDataRow>
           ))}
       </Table>
-      <Pagination count={count} />
+      {!editMode && <Pagination count={count} />}
     </>
   );
 }
