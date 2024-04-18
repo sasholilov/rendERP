@@ -12,7 +12,7 @@ const StyledPagination = styled.div`
 `;
 
 const P = styled.p`
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin-left: 0.8rem;
   color: var(--color-grey-3);
   & span {
@@ -26,13 +26,11 @@ const Buttons = styled.div`
 `;
 
 const PaginationButton = styled.button`
-  background-color: ${(props) =>
-    props.active ? " var(--color-grey-1)" : "var(--color-grey-2)"};
-  color: ${(props) => (props.active ? " var(--color-grey-1)" : "inherit")};
+  background-color: var(--color-grey-1);
   border: none;
-  border-radius: var(--border-radius-4);
+  border-radius: var(--border-radius-8);
   font-weight: 500;
-  font-size: 1.2rem;
+  font-size: 1rem;
 
   display: flex;
   align-items: center;
@@ -57,8 +55,8 @@ const PaginationButton = styled.button`
   }
 
   &:hover:not(:disabled) {
-    background-color: var(--color-brand-600);
-    color: var(--color-grey-4);
+    background-color: var(--color-grey-4);
+    color: var(--color-grey-1);
   }
 `;
 
