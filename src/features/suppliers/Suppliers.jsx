@@ -15,7 +15,7 @@ import Pagination from "../../ui/Pagination";
 
 import { useSearchParams } from "react-router-dom";
 import Search from "../../ui/Search";
-import Spinner from "./Spinner";
+import Spinner from "../../ui/Spinner";
 
 const StyledHeaderBar = styled.div`
   display: flex;
