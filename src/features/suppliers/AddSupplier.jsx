@@ -6,6 +6,7 @@ import InputText from "../../ui/InputText";
 import { useState, useRef } from "react";
 import { useAddSupplier } from "./useAddSupplier";
 import { toast } from "react-hot-toast";
+import Spinner from "../../ui/Spinner";
 
 const StyledForm = styled.form`
   grid-column: 1 / 7;
@@ -18,12 +19,12 @@ const StyledForm = styled.form`
 function AddSupplier() {
   const ref = useRef();
   const { isAdding, addSupplier } = useAddSupplier();
-  const [company_name, setCompany_name] = useState({});
-  const [vat, setVat] = useState({});
-  const [address, setAddress] = useState({});
-  const [telephone, setTelephone] = useState({});
-  const [iban, setIban] = useState({});
-  const [country, setCountry] = useState({});
+  const [company_name, setCompany_name] = useState("");
+  const [vat, setVat] = useState("");
+  const [address, setAddress] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [iban, setIban] = useState("");
+  const [country, setCountry] = useState("");
 
   function handleSaveSupplier(e) {
     e.preventDefault();
@@ -40,17 +41,11 @@ function AddSupplier() {
       toast.error("Please fill all fields");
       return;
     }
-    if (isAdding) return <p>Loading....</p>;
+    if (isAdding) return <Spinner />;
     addSupplier({ ...suplierObj }, { onSuccess: ref.current.reset() });
-    setAddress("");
-    setCompany_name("");
-    setVat("");
-    setIban("");
-    setTelephone("");
-    setCountry("");
   }
 
-  if (isAdding) return <p>Loading....</p>;
+  if (isAdding) return <Spinner />;
 
   return (
     <StyledForm ref={ref}>
