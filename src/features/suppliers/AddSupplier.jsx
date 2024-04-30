@@ -18,12 +18,12 @@ const StyledForm = styled.form`
 function AddSupplier() {
   const ref = useRef();
   const { isAdding, addSupplier } = useAddSupplier();
-  const [company_name, setCompany_name] = useState({});
-  const [vat, setVat] = useState({});
-  const [address, setAddress] = useState({});
-  const [telephone, setTelephone] = useState({});
-  const [iban, setIban] = useState({});
-  const [country, setCountry] = useState({});
+  const [company_name, setCompany_name] = useState("");
+  const [vat, setVat] = useState("");
+  const [address, setAddress] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [iban, setIban] = useState("");
+  const [country, setCountry] = useState("");
 
   function handleSaveSupplier(e) {
     e.preventDefault();
@@ -42,12 +42,6 @@ function AddSupplier() {
     }
     if (isAdding) return <p>Loading....</p>;
     addSupplier({ ...suplierObj }, { onSuccess: ref.current.reset() });
-    setAddress("");
-    setCompany_name("");
-    setVat("");
-    setIban("");
-    setTelephone("");
-    setCountry("");
   }
 
   if (isAdding) return <p>Loading....</p>;

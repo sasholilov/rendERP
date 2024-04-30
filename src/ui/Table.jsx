@@ -11,6 +11,7 @@ const StyledTable = styled.div`
   box-shadow: var(--box-shadow-1);
   align-items: center;
   padding: 0 20px 20px 20px;
+  word-wrap: break-word;
 `;
 
 function Table({ children, gridtemplatecolumns }) {

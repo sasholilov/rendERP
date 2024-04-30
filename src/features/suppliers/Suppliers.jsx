@@ -12,7 +12,6 @@ import { useDeleteSupplier } from "./useDeleteSupplier";
 import EditSupplier from "./EditSupplier";
 import AddSupplier from "./AddSupplier";
 import Pagination from "../../ui/Pagination";
-
 import { useSearchParams } from "react-router-dom";
 import Search from "../../ui/Search";
 import Spinner from "./Spinner";
@@ -66,7 +65,7 @@ function Suppliers() {
     if (window.confirm("Are you sure?")) deleteSupp(suppId);
   }
 
-  if (suppliers.length === 0)
+  if (suppliers.length === 0 && !searchParams)
     return (
       <>
         <StyledResultTitle>
@@ -82,9 +81,11 @@ function Suppliers() {
       {!editMode && (
         <StyledHeaderBar>
           <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-          <Button type={addModeButton} onClick={() => setAddMode(!addMode)}>
-            {addMode ? "End adding" : "Add new supplier"}
-          </Button>
+          {!searchQuery && (
+            <Button type={addModeButton} onClick={() => setAddMode(!addMode)}>
+              {addMode ? "End adding" : "Add new supplier"}
+            </Button>
+          )}
         </StyledHeaderBar>
       )}
       {searchQuery && (

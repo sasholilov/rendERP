@@ -12,8 +12,13 @@ const StyledForm = styled.form`
   grid-column: 1 / 7;
   align-items: center;
   display: grid;
-  grid-template-columns: repeat(7, minmax(180px, 1fr));
+  grid-template-columns: repeat(7, minmax(120px, 1fr));
   text-align: center;
+  grid-auto-rows: auto;
+  text-overflow: ellipsis;
+  @media screen and (max-width: 1460px) {
+    font-size: 12px;
+  }
 `;
 
 function EditSupplier({ objecToEdit, id, setEditMode }) {
