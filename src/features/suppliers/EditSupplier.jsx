@@ -7,6 +7,7 @@ import InputText from "../../ui/InputText";
 import { useState } from "react";
 import { useEditSupplier } from "./useEditSupplier";
 import CancelIcon from "../../ui/CancelIcon";
+import Spinner from "../../ui/Spinner";
 
 const StyledForm = styled.form`
   grid-column: 1 / 7;
@@ -45,7 +46,7 @@ function EditSupplier({ objecToEdit, id, setEditMode }) {
     setEditMode(false);
   }
 
-  if (isEditing) return <p>Loading....</p>;
+  if (isEditing) return <Spinner />;
 
   return (
     <StyledForm>

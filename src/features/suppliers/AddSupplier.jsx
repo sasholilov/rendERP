@@ -6,6 +6,7 @@ import InputText from "../../ui/InputText";
 import { useState, useRef } from "react";
 import { useAddSupplier } from "./useAddSupplier";
 import { toast } from "react-hot-toast";
+import Spinner from "../../ui/Spinner";
 
 const StyledForm = styled.form`
   grid-column: 1 / 7;
@@ -40,11 +41,11 @@ function AddSupplier() {
       toast.error("Please fill all fields");
       return;
     }
-    if (isAdding) return <p>Loading....</p>;
+    if (isAdding) return <Spinner />;
     addSupplier({ ...suplierObj }, { onSuccess: ref.current.reset() });
   }
 
-  if (isAdding) return <p>Loading....</p>;
+  if (isAdding) return <Spinner />;
 
   return (
     <StyledForm ref={ref}>
