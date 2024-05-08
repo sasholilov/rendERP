@@ -6,7 +6,7 @@ import AppLayout from "./ui/AppLayout";
 import Dashboard from "./pages/Dashboard";
 import Account from "./pages/Account";
 import Invoicing from "./pages/Invoicing";
-import Purchase from "./pages/Purchase";
+import PurchasePage from "./pages/PurchasePage";
 import Sale from "./pages/Sale";
 import Login from "./pages/Login";
 import PageNotFound from "./ui/PageNotFound";
@@ -35,7 +35,7 @@ function App() {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="account" element={<Account />} />
             <Route path="invoicing" element={<Invoicing />} />
-            <Route path="purchase" element={<Purchase />} />
+            <Route path="purchase" element={<PurchasePage />} />
             <Route path="sale" element={<Sale />} />
             <Route path="suppliers" element={<SuppliersPage />} />
             <Route path="outlets" element={<Outlets />} />
