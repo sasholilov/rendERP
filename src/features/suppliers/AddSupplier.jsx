@@ -12,7 +12,7 @@ const StyledForm = styled.form`
   grid-column: 1 / 7;
   align-items: center;
   display: grid;
-  grid-template-columns: repeat(7, minmax(180px, 1fr));
+  grid-template-columns: repeat(7, minmax(160px, 1fr));
   text-align: center;
 `;
 
