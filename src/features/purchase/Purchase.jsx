@@ -1,3 +1,5 @@
+import DeleteIcon from "../../ui/DeleteIcon";
+import EditIcon from "../../ui/EditIcon";
 import Spinner from "../../ui/Spinner";
 import Table from "../../ui/Table";
 import TableDataRow from "../../ui/TableDataRow";
@@ -13,20 +15,21 @@ function Purchase() {
   return (
     <>
       <Title>Purchase</Title>
-      <Table gridtemplatecolumns="1fr 1fr 1fr 1fr 1fr 1fr">
-        <TableHeader columns={6}>
+      <Table gridtemplatecolumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr">
+        <TableHeader columns={7}>
           <p>Purchase date</p>
           <p>Supplier</p>
           <p>Category</p>
           <p>Invoice number</p>
           <p>Total</p>
           <p>Has Vat</p>
+          <p>Actions</p>
         </TableHeader>
 
         {purchases.map((pur) => (
           <TableDataRow
             key={pur.id}
-            columns={6}
+            columns={7}
             resource={{
               purchase_date: pur.purchase_date,
               supplier: pur.suppliers.company_name,
@@ -35,7 +38,10 @@ function Purchase() {
               total: pur.total,
               has_vat: pur.has_vat,
             }}
-          ></TableDataRow>
+          >
+            <EditIcon />
+            <DeleteIcon />
+          </TableDataRow>
         ))}
       </Table>
     </>
