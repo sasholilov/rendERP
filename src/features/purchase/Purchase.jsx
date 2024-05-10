@@ -5,6 +5,7 @@ import Table from "../../ui/Table";
 import TableDataRow from "../../ui/TableDataRow";
 import TableHeader from "../../ui/TableHeader";
 import Title from "../../ui/Title";
+import { formatDate } from "../../utils/helpers";
 import { usePurchase } from "./usePurchase";
 
 function Purchase() {
@@ -31,7 +32,7 @@ function Purchase() {
             key={pur.id}
             columns={7}
             resource={{
-              purchase_date: pur.purchase_date,
+              purchase_date: formatDate(pur.purchase_date),
               supplier: pur.suppliers.company_name,
               purchase_category: pur.purchase_category,
               invoice_number: pur.invoice_number,
