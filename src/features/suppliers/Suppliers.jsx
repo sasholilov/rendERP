@@ -15,6 +15,7 @@ import Pagination from "../../ui/Pagination";
 import { useSearchParams } from "react-router-dom";
 import Search from "../../ui/Search";
 import Spinner from "../../ui/Spinner";
+import SearchResult from "../../ui/SearchResult";
 
 const StyledHeaderBar = styled.div`
   display: flex;
@@ -89,12 +90,7 @@ function Suppliers() {
         </StyledHeaderBar>
       )}
       {searchQuery && (
-        <StyledResultTitle>
-          {`Founded (${suppliers.length}) ${
-            suppliers.length > 1 ? `results` : `result`
-          } from search keyword
-          "${searchQuery}"`}
-        </StyledResultTitle>
+        <SearchResult feature={suppliers} searchQuery={searchQuery} />
       )}
       <Table gridtemplatecolumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr">
         <TableHeader columns={7}>

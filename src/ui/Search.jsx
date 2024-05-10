@@ -11,18 +11,27 @@ const SearchBar = styled.div`
 
 function Search({ searchQuery, setSearchQuery }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  function handleSearch(e) {
+  function handleSearchEnter(e) {
     if (e.key === "Enter") {
       setSearchQuery(e.target.value);
     }
-    setSearchQuery(e.target.previousElementSibling.value);
+    if (searchParams.get("page")) searchParams.set("page", 1);
+    setSearchParams(searchParams);
+  }
+
+  function handleSearch(e) {
+    setSearchQuery(e.target.previousSibling.value);
     if (searchParams.get("page")) searchParams.set("page", 1);
     setSearchParams(searchParams);
   }
 
   return (
     <SearchBar>
-      <InputText placeholder="Search..." onKeyDown={(e) => handleSearch(e)} />
+      <InputText
+        key={searchQuery}
+        placeholder="Search..."
+        onKeyDown={(e) => handleSearchEnter(e)}
+      />
       <Button type="add" onClick={(e) => handleSearch(e)}>
         Search
       </Button>
