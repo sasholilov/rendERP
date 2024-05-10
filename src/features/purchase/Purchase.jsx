@@ -5,7 +5,7 @@ import Table from "../../ui/Table";
 import TableDataRow from "../../ui/TableDataRow";
 import TableHeader from "../../ui/TableHeader";
 import Title from "../../ui/Title";
-import { formatDate } from "../../utils/helpers";
+import { formatDate, formatPrice } from "../../utils/helpers";
 import { usePurchase } from "./usePurchase";
 
 function Purchase() {
@@ -16,28 +16,26 @@ function Purchase() {
   return (
     <>
       <Title>Purchase</Title>
-      <Table gridtemplatecolumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr">
-        <TableHeader columns={7}>
-          <p>Purchase date</p>
+      <Table gridtemplatecolumns="1fr 1fr 1fr 1fr 1fr 1fr">
+        <TableHeader columns={6}>
+          <p>Date</p>
           <p>Supplier</p>
           <p>Category</p>
           <p>Invoice number</p>
           <p>Total</p>
-          <p>Has Vat</p>
           <p>Actions</p>
         </TableHeader>
 
         {purchases.map((pur) => (
           <TableDataRow
             key={pur.id}
-            columns={7}
+            columns={6}
             resource={{
               purchase_date: formatDate(pur.purchase_date),
               supplier: pur.suppliers.company_name,
               purchase_category: pur.purchase_category,
               invoice_number: pur.invoice_number,
-              total: pur.total,
-              has_vat: pur.has_vat,
+              total: formatPrice(pur.total),
             }}
           >
             <EditIcon />
