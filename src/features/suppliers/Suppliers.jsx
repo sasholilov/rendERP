@@ -3,7 +3,6 @@ import TableHeader from "../../ui/TableHeader";
 import Title from "../../ui/Title";
 import styled from "styled-components";
 import { useSuppliers } from "./useSuppliers";
-import Button from "../../ui/Button";
 import DeleteIcon from "../../ui/DeleteIcon";
 import EditIcon from "../../ui/EditIcon";
 import { useEffect, useState } from "react";
@@ -13,17 +12,9 @@ import EditSupplier from "./EditSupplier";
 import AddSupplier from "./AddSupplier";
 import Pagination from "../../ui/Pagination";
 import { useSearchParams } from "react-router-dom";
-import Search from "../../ui/Search";
 import Spinner from "../../ui/Spinner";
 import SearchResult from "../../ui/SearchResult";
-
-const StyledHeaderBar = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 0;
-  margin: 0;
-  margin-bottom: 10px;
-`;
+import FeatureHeader from "../../ui/FeatureHeader";
 
 const StyledResultTitle = styled.h3`
   text-align: center;
@@ -80,14 +71,14 @@ function Suppliers() {
       <Title>Suppliers</Title>
 
       {!editMode && (
-        <StyledHeaderBar>
-          <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-          {!searchQuery && (
-            <Button type={addModeButton} onClick={() => setAddMode(!addMode)}>
-              {addMode ? "End adding" : "Add new supplier"}
-            </Button>
-          )}
-        </StyledHeaderBar>
+        <FeatureHeader
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          addMode={addMode}
+          addModeButton={addModeButton}
+          setAddMode={setAddMode}
+          feature={"supplier"}
+        />
       )}
       {searchQuery && (
         <SearchResult feature={suppliers} searchQuery={searchQuery} />

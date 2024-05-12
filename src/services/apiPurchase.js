@@ -14,3 +14,18 @@ export async function getPurchases() {
 
   return { data };
 }
+
+export async function addPurchase(newPurchase) {
+  let query = supabase.from("purchase");
+
+  const { data: insertedData, error: insertError } = await query
+    .insert(newPurchase)
+    .single();
+
+  if (insertError) {
+    console.log(insertError);
+    throw new Error("There is an error adding the purchase");
+  }
+
+  return insertedData;
+}
