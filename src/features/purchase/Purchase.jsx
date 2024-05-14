@@ -62,9 +62,9 @@ function Purchase() {
           <p>Actions</p>
         </TableHeader>
         {!editMode && addMode && <AddPurchase />}
-        {purchases.map((pur) => (
+        {purchases.map((pur, index) => (
           <TableDataRow
-            key={pur.id}
+            key={`${pur.id}-${index}`}
             columns={7}
             resource={{
               purchase_date: formatDate(pur.purchase_date),

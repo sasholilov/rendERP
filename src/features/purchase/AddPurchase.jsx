@@ -7,6 +7,7 @@ import { useAddPurchase } from "./useAddPurchase";
 import { useState, useRef } from "react";
 import { toast } from "react-hot-toast";
 import Spinner from "../../ui/Spinner";
+import { useSuppliers } from "../suppliers/useSuppliers";
 
 const StyledForm = styled.form`
   grid-column: 1 / 7;
@@ -19,18 +20,22 @@ const StyledForm = styled.form`
 function AddPurchase() {
   const ref = useRef();
   const { isAdding, addPurchase } = useAddPurchase();
+  const { isLoading, suppliers } = useSuppliers();
   const [purchase_date, setPurchase_date] = useState("");
   const [supplier_id, setSupplier_id] = useState("");
-  const [category, setCategory] = useState("");
+  const [purchase_category, setPurchase_category] = useState("");
   const [invoice_number, setInvoice_number] = useState("");
   const [has_vat, setHas_vat] = useState("");
   const [total, setTotal] = useState("");
+
+  console.log(suppliers);
 
   function handleSavePurchase(e) {
     e.preventDefault();
     const purchaseObj = {
       purchase_date,
       supplier_id,
+      purchase_category,
       invoice_number,
       has_vat,
       total,
@@ -39,7 +44,7 @@ function AddPurchase() {
     if (
       !purchase_date ||
       !supplier_id ||
-      !category ||
+      !purchase_category ||
       !invoice_number ||
       !has_vat ||
       !total
@@ -51,7 +56,13 @@ function AddPurchase() {
     addPurchase({ ...purchaseObj }, { onSuccess: ref.current.reset() });
   }
 
-  if (isAdding) return <Spinner />;
+  function handleSupplierChange(e) {
+    const selectedSupplier = e.target.value;
+    setSupplier_id(Number(selectedSupplier));
+    console.log("check here", e.target.value);
+  }
+
+  if (isAdding || isLoading) return <Spinner />;
 
   return (
     <StyledForm ref={ref}>
@@ -63,17 +74,24 @@ function AddPurchase() {
         />
       </TableData>
       <TableData>
-        <InputText
-          type="text"
-          placeholder="Supplier"
-          onChange={(e) => setSupplier_id(e.target.value)}
-        />
+        <select
+          placeholder="Select Supplier"
+          onChange={(e) => handleSupplierChange(e)}
+          value={supplier_id}
+        >
+          <option>Select Supplier</option>
+          {suppliers.map((sup) => (
+            <option key={sup.id} value={sup.id}>
+              {sup.company_name}
+            </option>
+          ))}
+        </select>
       </TableData>
       <TableData>
         <InputText
           type="text"
           placeholder="Category"
-          onChange={(e) => setCategory(e.target.value)}
+          onChange={(e) => setPurchase_category(e.target.value)}
         />
       </TableData>
       <TableData>
