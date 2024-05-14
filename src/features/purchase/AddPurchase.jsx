@@ -8,6 +8,7 @@ import { useState, useRef } from "react";
 import { toast } from "react-hot-toast";
 import Spinner from "../../ui/Spinner";
 import { useSuppliers } from "../suppliers/useSuppliers";
+import InputSelect from "../../ui/InputSelect";
 
 const StyledForm = styled.form`
   grid-column: 1 / 7;
@@ -74,18 +75,13 @@ function AddPurchase() {
         />
       </TableData>
       <TableData>
-        <select
-          placeholder="Select Supplier"
-          onChange={(e) => handleSupplierChange(e)}
+        <InputSelect
+          resource={suppliers}
+          displayOptions="company_name"
+          handle={(e) => handleSupplierChange(e)}
           value={supplier_id}
-        >
-          <option>Select Supplier</option>
-          {suppliers.map((sup) => (
-            <option key={sup.id} value={sup.id}>
-              {sup.company_name}
-            </option>
-          ))}
-        </select>
+          selectfor="Supplier"
+        />
       </TableData>
       <TableData>
         <InputText
