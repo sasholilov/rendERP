@@ -78,23 +78,24 @@ function Purchase() {
           />
         )}
         {!editMode && addMode && <AddPurchase />}
-        {purchases.map((pur, index) => (
-          <TableDataRow
-            key={`${pur.id}-${index}`}
-            columns={7}
-            resource={{
-              purchase_date: formatDate(pur.purchase_date),
-              supplier: pur.suppliers.company_name,
-              purchase_category: pur.purchase_category,
-              invoice_number: pur.invoice_number,
-              total: formatPrice(pur.total),
-              has_vat: pur.has_vat,
-            }}
-          >
-            <EditIcon onClick={() => handleEditPurchase(pur.id)} />
-            <DeleteIcon />
-          </TableDataRow>
-        ))}
+        {!editMode &&
+          purchases.map((pur, index) => (
+            <TableDataRow
+              key={`${pur.id}-${index}`}
+              columns={7}
+              resource={{
+                purchase_date: formatDate(pur.purchase_date),
+                supplier: pur.suppliers.company_name,
+                purchase_category: pur.purchase_category,
+                invoice_number: pur.invoice_number,
+                total: formatPrice(pur.total),
+                has_vat: pur.has_vat,
+              }}
+            >
+              <EditIcon onClick={() => handleEditPurchase(pur.id)} />
+              <DeleteIcon />
+            </TableDataRow>
+          ))}
       </Table>
     </>
   );

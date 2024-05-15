@@ -31,7 +31,7 @@ const StyledSelect = styled.select`
 
 function InputSelect({ selectfor, resource, displayOptions, handle, value }) {
   return (
-    <StyledSelect isSearchable onChange={(e) => handle(e)} value={value}>
+    <StyledSelect onChange={(e) => handle(e)} defaultValue={value}>
       <option>Select {selectfor}</option>
       {resource.map((res) => (
         <option key={res.id} value={res.id}>
@@ -43,10 +43,10 @@ function InputSelect({ selectfor, resource, displayOptions, handle, value }) {
 }
 
 InputSelect.propTypes = {
-  resource: PropTypes.object,
+  resource: PropTypes.array,
   displayOptions: PropTypes.string,
   handle: PropTypes.func,
-  value: PropTypes.string,
+  value: PropTypes.any,
   selectfor: PropTypes.string,
 };
 

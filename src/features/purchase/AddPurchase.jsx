@@ -60,7 +60,6 @@ function AddPurchase() {
   function handleSupplierChange(e) {
     const selectedSupplier = e.target.value;
     setSupplier_id(Number(selectedSupplier));
-    console.log("check here", e.target.value);
   }
 
   if (isAdding || isLoading) return <Spinner />;

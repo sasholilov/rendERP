@@ -8,6 +8,8 @@ import { useState } from "react";
 import { useEditPurchase } from "./useEditPurchase";
 import CancelIcon from "../../ui/CancelIcon";
 import Spinner from "../../ui/Spinner";
+import { useSuppliers } from "../suppliers/useSuppliers";
+import InputSelect from "../../ui/InputSelect";
 
 const StyledForm = styled.form`
   grid-column: 1 / 7;
@@ -24,6 +26,7 @@ const StyledForm = styled.form`
 
 function EditPurchase({ objectToEdit, setEditMode }) {
   const { isEditing, editPurchase } = useEditPurchase();
+  const { isLoading, suppliers } = useSuppliers();
   const [purchase_date, setPurchase_date] = useState(
     objectToEdit?.purchase_date
   );
@@ -36,6 +39,11 @@ function EditPurchase({ objectToEdit, setEditMode }) {
   );
   const [total, setTotal] = useState(objectToEdit?.total);
   const [has_vat, setHas_vat] = useState(objectToEdit?.has_vat);
+
+  function handleSupplierChange(e) {
+    const selectedSupplier = e.target.value;
+    setSupplier_id(Number(selectedSupplier));
+  }
 
   function handleSaveEditedPurchase(e, purchaseId) {
     e.preventDefault();
@@ -52,7 +60,7 @@ function EditPurchase({ objectToEdit, setEditMode }) {
     setEditMode(false);
   }
 
-  if (isEditing) return <Spinner />;
+  if (isEditing || isLoading) return <Spinner />;
 
   return (
     <StyledForm>
@@ -65,11 +73,12 @@ function EditPurchase({ objectToEdit, setEditMode }) {
         />
       </TableData>
       <TableData>
-        <InputText
-          type="text"
-          placeholder="Supplier"
-          onChange={(e) => setSupplier_id(e.target.value)}
-          value={supplier_id}
+        <InputSelect
+          resource={suppliers}
+          displayOptions="company_name"
+          handle={(e) => handleSupplierChange(e)}
+          value={objectToEdit.suppliers.id}
+          selectfor="Supplier"
         />
       </TableData>
       <TableData>

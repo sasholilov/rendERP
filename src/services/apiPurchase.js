@@ -4,7 +4,7 @@ export async function getPurchases() {
   let { data, error } = await supabase
     .from("purchase")
     .select(
-      `id, purchase_date, suppliers(company_name), purchase_category, invoice_number, total, has_vat`
+      `id, purchase_date, suppliers(company_name, id), purchase_category, invoice_number, total, has_vat`
     )
     .order("created_at", { ascending: false });
 
