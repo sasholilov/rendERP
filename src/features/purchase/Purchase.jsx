@@ -12,6 +12,7 @@ import { useSearchParams } from "react-router-dom";
 import FeatureHeader from "../../ui/FeatureHeader";
 import SearchResult from "../../ui/SearchResult";
 import AddPurchase from "./AddPurchase";
+import EditPurchase from "./EditPurchase";
 
 function Purchase() {
   const { isLoading, purchases } = usePurchase();
@@ -19,6 +20,7 @@ function Purchase() {
   const [editMode, setEditMode] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
+  const [purchaseToEdit, setPurchaseToEdit] = useState({});
   const addModeButton = addMode === true ? "close" : "add";
 
   useEffect(() => {
@@ -34,6 +36,14 @@ function Purchase() {
   }, [searchQuery, searchParams, setSearchParams]);
 
   if (isLoading) return <Spinner />;
+
+  function handleEditPurchase(id) {
+    const objectToEditToState = purchases.find(
+      (purchase) => purchase.id === id
+    );
+    setPurchaseToEdit(objectToEditToState);
+    setEditMode(!editMode);
+  }
 
   return (
     <>
@@ -61,6 +71,12 @@ function Purchase() {
           <p>VAT</p>
           <p>Actions</p>
         </TableHeader>
+        {editMode && (
+          <EditPurchase
+            objectToEdit={purchaseToEdit}
+            setEditMode={setEditMode}
+          />
+        )}
         {!editMode && addMode && <AddPurchase />}
         {purchases.map((pur, index) => (
           <TableDataRow
@@ -75,7 +91,7 @@ function Purchase() {
               has_vat: pur.has_vat,
             }}
           >
-            <EditIcon onClick={() => setEditMode(true)} />
+            <EditIcon onClick={() => handleEditPurchase(pur.id)} />
             <DeleteIcon />
           </TableDataRow>
         ))}

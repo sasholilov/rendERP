@@ -59,8 +59,6 @@ export async function addSupplier(newSupplier) {
 }
 
 export async function editSupplier(editedSupplier, id) {
-  console.log("CHEKC HERE", editedSupplier, id);
-
   let query = supabase.from("suppliers");
   const { data: updatedData, error: updateError } = await query
     .update(editedSupplier)

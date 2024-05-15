@@ -27,7 +27,7 @@ InputText.propTypes = {
   type: PropTypes.string,
   placeholder: PropTypes.string,
   onChange: PropTypes.func,
-  value: PropTypes.string,
+  value: PropTypes.any,
   onKeyDown: PropTypes.func,
 };
 
