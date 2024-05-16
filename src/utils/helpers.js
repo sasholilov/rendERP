@@ -1,5 +1,4 @@
-import { LOCALE } from "./constants";
-const currency = "лв";
+import { LOCALE, CURRENCY } from "./constants";
 
 export const formatDate = function (date) {
   const newDate = new Date(date);
@@ -7,6 +6,6 @@ export const formatDate = function (date) {
 };
 
 export const formatPrice = function (price) {
-  const newPrice = `${price.toFixed(2)}${currency}`;
+  const newPrice = `${price.toFixed(2)}${CURRENCY}`;
   return newPrice;
 };

@@ -21,7 +21,6 @@ const StyledResultTitle = styled.h3`
   text-align: center;
   color: var(--color-grey-4);
 `;
-
 function Purchase() {
   const { isLoading, purchases, count } = usePurchase();
   const { isDeleting, deletePur } = useDeletePurchase();
@@ -31,6 +30,7 @@ function Purchase() {
   const [searchQuery, setSearchQuery] = useState("");
   const [purchaseToEdit, setPurchaseToEdit] = useState({});
   const addModeButton = addMode === true ? "close" : "add";
+
   const titleMode = addMode
     ? "Purchase - Adding"
     : editMode
@@ -62,6 +62,7 @@ function Purchase() {
   function handleDelete(purID) {
     if (window.confirm("Are you sure?")) deletePur(purID);
   }
+
   if (count === 0)
     return (
       <>

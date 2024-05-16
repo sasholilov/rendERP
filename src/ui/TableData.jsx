@@ -11,7 +11,7 @@ function TableData({ children }) {
 }
 
 TableData.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.any,
 };
 
 export default TableData;

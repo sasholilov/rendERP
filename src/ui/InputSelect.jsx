@@ -33,11 +33,17 @@ function InputSelect({ selectfor, resource, displayOptions, handle, value }) {
   return (
     <StyledSelect onChange={(e) => handle(e)} defaultValue={value}>
       <option>Select {selectfor}</option>
-      {resource.map((res) => (
-        <option key={res.id} value={res.id}>
-          {res[displayOptions]}
-        </option>
-      ))}
+      {displayOptions
+        ? resource.map((res) => (
+            <option key={res.id} value={res.id}>
+              {res[displayOptions]}
+            </option>
+          ))
+        : resource.map((res) => (
+            <option key={res} value={res}>
+              {res}
+            </option>
+          ))}
     </StyledSelect>
   );
 }

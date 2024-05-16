@@ -3,13 +3,15 @@ import TableData from "../../ui/TableData";
 import SaveIcon from "../../ui/SaveIcon";
 import Button from "../../ui/Button";
 import InputText from "../../ui/InputText";
+import Spinner from "../../ui/Spinner";
+import InputSelect from "../../ui/InputSelect";
+import DatePicker from "react-datepicker";
 import { useAddPurchase } from "./useAddPurchase";
 import { useState, useRef } from "react";
 import { toast } from "react-hot-toast";
-import Spinner from "../../ui/Spinner";
 import { useSuppliers } from "../suppliers/useSuppliers";
-import InputSelect from "../../ui/InputSelect";
-import DatePicker from "react-datepicker";
+import { PURCHASE_CATEGORY } from "../../utils/constants";
+
 import "react-datepicker/dist/react-datepicker.css";
 import "./custom-datepicker.css";
 
@@ -89,10 +91,10 @@ function AddPurchase() {
         />
       </TableData>
       <TableData>
-        <InputText
-          type="text"
-          placeholder="Category"
-          onChange={(e) => setPurchase_category(e.target.value)}
+        <InputSelect
+          resource={PURCHASE_CATEGORY}
+          selectfor="Category"
+          handle={(e) => setPurchase_category(e.target.value)}
         />
       </TableData>
       <TableData>
