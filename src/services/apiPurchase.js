@@ -1,19 +1,34 @@
 import supabase from "./supabase";
+import { PAGE_SIZE } from "../utils/constants";
 
-export async function getPurchases() {
-  let { data, error } = await supabase
+export async function getPurchases({ page, searchQuery }) {
+  let query = supabase
     .from("purchase")
     .select(
-      `id, purchase_date, suppliers(company_name, id), purchase_category, invoice_number, total, has_vat`
+      `id, purchase_date, suppliers(company_name, id), purchase_category, invoice_number, total, has_vat`,
+      { count: "exact" }
     )
     .order("created_at", { ascending: false });
 
+  if (searchQuery) {
+    query = query.ilike("combine_columns_purchase", `%${searchQuery}%`, {
+      type: "websearch",
+    });
+  }
+
+  if (page) {
+    const from = (page - 1) * PAGE_SIZE;
+    const to = from + PAGE_SIZE - 1;
+    query = query.range(from, to);
+  }
+
+  const { data, error, count } = await query;
   if (error) {
     console.log(error);
     throw new Error("Purchase could not be loaded");
   }
 
-  return { data };
+  return { data, count };
 }
 
 export async function addPurchase(newPurchase) {
@@ -47,4 +62,14 @@ export async function editPurchase(objectToSave, purchaseId) {
   }
 
   return updatedData;
+}
+
+export async function deletePurchase(id) {
+  const { data, error } = await supabase.from("purchase").delete().eq("id", id);
+  if (error) {
+    console.log(error);
+    throw new Error("There is an error deleting the purchase");
+  }
+
+  return data;
 }

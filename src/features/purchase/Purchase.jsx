@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import styled from "styled-components";
 import DeleteIcon from "../../ui/DeleteIcon";
 import EditIcon from "../../ui/EditIcon";
 import Spinner from "../../ui/Spinner";
@@ -6,16 +7,24 @@ import Table from "../../ui/Table";
 import TableDataRow from "../../ui/TableDataRow";
 import TableHeader from "../../ui/TableHeader";
 import Title from "../../ui/Title";
+import Pagination from "../../ui/Pagination";
 import { formatDate, formatPrice } from "../../utils/helpers";
 import { usePurchase } from "./usePurchase";
 import { useSearchParams } from "react-router-dom";
+import { useDeletePurchase } from "./useDeletePurchase";
 import FeatureHeader from "../../ui/FeatureHeader";
 import SearchResult from "../../ui/SearchResult";
 import AddPurchase from "./AddPurchase";
 import EditPurchase from "./EditPurchase";
 
+const StyledResultTitle = styled.h3`
+  text-align: center;
+  color: var(--color-grey-4);
+`;
+
 function Purchase() {
-  const { isLoading, purchases } = usePurchase();
+  const { isLoading, purchases, count } = usePurchase();
+  const { isDeleting, deletePur } = useDeletePurchase();
   const [addMode, setAddMode] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -35,7 +44,7 @@ function Purchase() {
     }
   }, [searchQuery, searchParams, setSearchParams]);
 
-  if (isLoading) return <Spinner />;
+  if (isLoading || isDeleting) return <Spinner />;
 
   function handleEditPurchase(id) {
     const objectToEditToState = purchases.find(
@@ -45,6 +54,18 @@ function Purchase() {
     setEditMode(!editMode);
   }
 
+  function handleDelete(purID) {
+    if (window.confirm("Are you sure?")) deletePur(purID);
+  }
+  if (count === 0)
+    return (
+      <>
+        <StyledResultTitle>
+          You do not have any purchases! Add a new purchase from the form below.
+        </StyledResultTitle>
+        <AddPurchase />
+      </>
+    );
   return (
     <>
       <Title>Purchase</Title>
@@ -93,10 +114,11 @@ function Purchase() {
               }}
             >
               <EditIcon onClick={() => handleEditPurchase(pur.id)} />
-              <DeleteIcon />
+              <DeleteIcon onClick={() => handleDelete(pur.id)} />
             </TableDataRow>
           ))}
       </Table>
+      {!editMode && <Pagination count={count} />}
     </>
   );
 }
