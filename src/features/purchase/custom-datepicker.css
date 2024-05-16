@@ -7,3 +7,38 @@
   color: #495057;
   font-size: 1rem !important;
 }
+.react-datepicker__header {
+  background: var(--color-blue-2);
+}
+
+.react-datepicker__current-month,
+.react-datepicker__day-names,
+.react-datepicker__day-name {
+  color: var(--color-light);
+}
+
+.react-datepicker__day--keyboard-selected {
+  background-color: var(--color-skyblue-1);
+}
+
+.react-datepicker__day--keyboard-selected:hover {
+  background-color: var(--color-skyblue-2);
+}
+
+.react-datepicker__day:hover {
+  background-color: var(--color-red-1);
+  color: var(--color-light);
+}
+
+.react-datepicker__input-container::before {
+  content: "";
+  position: absolute;
+  left: 5%;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  transform: translate(0, -50%);
+  background-image: url("../../data/images/icons8-calendar-48.png");
+  background-size: contain;
+  pointer-events: none;
+}

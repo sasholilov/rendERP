@@ -30,6 +30,11 @@ function Suppliers() {
   const [editMode, setEditMode] = useState(false);
   const [objectToEdit, setObjectToEdit] = useState({});
   const addModeButton = addMode === true ? "close" : "add";
+  const titleMode = addMode
+    ? "Suppliers - Adding"
+    : editMode
+    ? "Suppliers - Editing"
+    : "Suppliers";
 
   useEffect(() => {
     if (searchQuery) {
@@ -68,7 +73,7 @@ function Suppliers() {
     );
   return (
     <>
-      <Title>Suppliers</Title>
+      <Title>{titleMode}</Title>
 
       {!editMode && (
         <FeatureHeader

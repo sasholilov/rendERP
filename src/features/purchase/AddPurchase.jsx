@@ -76,7 +76,7 @@ function AddPurchase() {
           selected={selectDate}
           onChange={(date) => setPurchase_date(date)}
           dateFormat="MM.dd.yyyy"
-          placeholderText="Choise date"
+          placeholderText="Select Date"
         />
       </TableData>
       <TableData>

@@ -31,6 +31,11 @@ function Purchase() {
   const [searchQuery, setSearchQuery] = useState("");
   const [purchaseToEdit, setPurchaseToEdit] = useState({});
   const addModeButton = addMode === true ? "close" : "add";
+  const titleMode = addMode
+    ? "Purchase - Adding"
+    : editMode
+    ? "Purchase - Editing"
+    : "Purchase";
 
   useEffect(() => {
     if (searchQuery) {
@@ -68,7 +73,7 @@ function Purchase() {
     );
   return (
     <>
-      <Title>Purchase</Title>
+      <Title>{titleMode}</Title>
       {!editMode && (
         <FeatureHeader
           searchQuery={searchQuery}
