@@ -9,6 +9,9 @@ import { toast } from "react-hot-toast";
 import Spinner from "../../ui/Spinner";
 import { useSuppliers } from "../suppliers/useSuppliers";
 import InputSelect from "../../ui/InputSelect";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "./custom-datepicker.css";
 
 const StyledForm = styled.form`
   grid-column: 1 / 7;
@@ -62,15 +65,18 @@ function AddPurchase() {
     setSupplier_id(Number(selectedSupplier));
   }
 
+  const selectDate = purchase_date ? purchase_date : null;
+
   if (isAdding || isLoading) return <Spinner />;
 
   return (
     <StyledForm ref={ref}>
       <TableData>
-        <InputText
-          type="text"
-          placeholder="Date"
-          onChange={(e) => setPurchase_date(e.target.value)}
+        <DatePicker
+          selected={selectDate}
+          onChange={(date) => setPurchase_date(date)}
+          dateFormat="MM.dd.yyyy"
+          placeholderText="Choise date"
         />
       </TableData>
       <TableData>
