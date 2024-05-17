@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -51,18 +50,13 @@ const Slider = styled.span`
   }
 `;
 
-function ToggleSwitch({ check, isDisabled }) {
-  const [checked, setChecked] = useState(check);
-  const handleChange = () => {
-    setChecked(!check);
-  };
-
+function ToggleSwitch({ checked, isDisabled, onChange }) {
   return (
     <Switch>
       <Checkbox
         type="checkbox"
         checked={checked}
-        onChange={handleChange}
+        onChange={onChange}
         disabled={isDisabled}
       />
       <Slider />
@@ -71,9 +65,9 @@ function ToggleSwitch({ check, isDisabled }) {
 }
 
 ToggleSwitch.propTypes = {
-  check: PropTypes.bool,
+  checked: PropTypes.bool,
   isDisabled: PropTypes.bool,
-  togleRef: PropTypes.any,
+  onChange: PropTypes.func,
 };
 
 export default ToggleSwitch;

@@ -10,6 +10,7 @@ import CancelIcon from "../../ui/CancelIcon";
 import Spinner from "../../ui/Spinner";
 import { useSuppliers } from "../suppliers/useSuppliers";
 import InputSelect from "../../ui/InputSelect";
+import ToggleSwitch from "../../ui/ToggleSwitch";
 
 const StyledForm = styled.form`
   grid-column: 1 / 7;
@@ -39,10 +40,16 @@ function EditPurchase({ objectToEdit, setEditMode }) {
   );
   const [total, setTotal] = useState(objectToEdit?.total);
   const [has_vat, setHas_vat] = useState(objectToEdit?.has_vat);
+  const [isChecked, setIsChecked] = useState(objectToEdit.has_vat);
 
   function handleSupplierChange(e) {
     const selectedSupplier = e.target.value;
     setSupplier_id(Number(selectedSupplier));
+  }
+
+  function handleToggleChange(e) {
+    setHas_vat(e.target.checked);
+    setIsChecked(e.target.checked);
   }
 
   function handleSaveEditedPurchase(e, purchaseId) {
@@ -106,11 +113,10 @@ function EditPurchase({ objectToEdit, setEditMode }) {
         />
       </TableData>
       <TableData>
-        <InputText
-          type="text"
-          placeholder="Has Vat"
-          onChange={(e) => setHas_vat(e.target.value)}
-          value={has_vat}
+        <ToggleSwitch
+          checked={isChecked}
+          onChange={handleToggleChange}
+          isDisabled={false}
         />
       </TableData>
       <TableData>

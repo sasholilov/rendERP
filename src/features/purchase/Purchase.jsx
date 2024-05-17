@@ -16,6 +16,7 @@ import FeatureHeader from "../../ui/FeatureHeader";
 import SearchResult from "../../ui/SearchResult";
 import AddPurchase from "./AddPurchase";
 import EditPurchase from "./EditPurchase";
+import ToggleSwitch from "../../ui/ToggleSwitch";
 
 const StyledResultTitle = styled.h3`
   text-align: center;
@@ -116,7 +117,9 @@ function Purchase() {
                 purchase_category: pur.purchase_category,
                 invoice_number: pur.invoice_number,
                 total: formatPrice(pur.total),
-                has_vat: pur.has_vat,
+                has_vat: (
+                  <ToggleSwitch checked={pur.has_vat} isDisabled={true} />
+                ),
               }}
             >
               <EditIcon onClick={() => handleEditPurchase(pur.id)} />
