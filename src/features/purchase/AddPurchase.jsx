@@ -14,6 +14,7 @@ import { PURCHASE_CATEGORY } from "../../utils/constants";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./custom-datepicker.css";
+import ToggleSwitch from "../../ui/ToggleSwitch";
 
 const StyledForm = styled.form`
   grid-column: 1 / 7;
@@ -31,10 +32,14 @@ function AddPurchase() {
   const [supplier_id, setSupplier_id] = useState("");
   const [purchase_category, setPurchase_category] = useState("");
   const [invoice_number, setInvoice_number] = useState("");
-  const [has_vat, setHas_vat] = useState("");
+  const [has_vat, setHas_vat] = useState(true);
   const [total, setTotal] = useState("");
+  const [isChecked, setIsChecked] = useState(true);
 
-  console.log(suppliers);
+  function handleToggleChange(e) {
+    setHas_vat(e.target.checked);
+    setIsChecked(e.target.checked);
+  }
 
   function handleSavePurchase(e) {
     e.preventDefault();
@@ -52,7 +57,6 @@ function AddPurchase() {
       !supplier_id ||
       !purchase_category ||
       !invoice_number ||
-      !has_vat ||
       !total
     ) {
       toast.error("Please fill all fields");
@@ -112,10 +116,10 @@ function AddPurchase() {
         />
       </TableData>
       <TableData>
-        <InputText
-          type="text"
-          placeholder="Has Vat"
-          onChange={(e) => setHas_vat(e.target.value)}
+        <ToggleSwitch
+          checked={isChecked}
+          onChange={handleToggleChange}
+          isDisabled={false}
         />
       </TableData>
       <TableData>
