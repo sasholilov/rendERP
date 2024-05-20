@@ -40,7 +40,6 @@ function Suppliers() {
     if (searchQuery) {
       searchParams.set("search", searchQuery);
       setSearchParams(searchParams);
-      console.log(searchParams);
     }
     if (searchQuery === "") {
       searchParams.delete("search");

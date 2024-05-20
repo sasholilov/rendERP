@@ -42,7 +42,6 @@ function Purchase() {
     if (searchQuery) {
       searchParams.set("search", searchQuery);
       setSearchParams(searchParams);
-      console.log(searchParams);
     }
     if (searchQuery === "") {
       searchParams.delete("search");
@@ -64,7 +63,7 @@ function Purchase() {
     if (window.confirm("Are you sure?")) deletePur(purID);
   }
 
-  if (count === 0)
+  if (count === 0 && !searchParams)
     return (
       <>
         <StyledResultTitle>
