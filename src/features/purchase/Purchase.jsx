@@ -17,18 +17,32 @@ import SearchResult from "../../ui/SearchResult";
 import AddPurchase from "./AddPurchase";
 import EditPurchase from "./EditPurchase";
 import ToggleSwitch from "../../ui/ToggleSwitch";
+import Button from "../../ui/Button";
+import { useSuppliers } from "../suppliers/useSuppliers";
+import InputSelect from "../../ui/InputSelect";
 
 const StyledResultTitle = styled.h3`
   text-align: center;
   color: var(--color-grey-4);
 `;
+
+const StyledFilters = styled.div`
+  display: flex;
+  gap: 1rem;
+  padding-bottom: 0;
+  margin: 0;
+  margin-bottom: 10px;
+`;
+
 function Purchase() {
   const { isLoading, purchases, count } = usePurchase();
+  const { suppliers } = useSuppliers();
   const { isDeleting, deletePur } = useDeletePurchase();
   const [addMode, setAddMode] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
+  const [filterValue, setFilterValue] = useState("");
   const [purchaseToEdit, setPurchaseToEdit] = useState({});
   const addModeButton = addMode === true ? "close" : "add";
 
@@ -43,11 +57,15 @@ function Purchase() {
       searchParams.set("search", searchQuery);
       setSearchParams(searchParams);
     }
-    if (searchQuery === "") {
+    if (filterValue) {
+      searchParams.set("filter", filterValue);
+      setSearchParams(searchParams);
+    }
+    if (searchQuery || filterValue === "") {
       searchParams.delete("search");
       setSearchParams(searchParams);
     }
-  }, [searchQuery, searchParams, setSearchParams]);
+  }, [searchQuery, searchParams, setSearchParams, filterValue]);
 
   if (isLoading || isDeleting) return <Spinner />;
 
@@ -61,6 +79,10 @@ function Purchase() {
 
   function handleDelete(purID) {
     if (window.confirm("Are you sure?")) deletePur(purID);
+  }
+
+  function handleFilter(e) {
+    setFilterValue(e.target.value);
   }
 
   if (count === 0 && !searchParams)
@@ -88,6 +110,18 @@ function Purchase() {
       {searchQuery && (
         <SearchResult feature={purchases} searchQuery={searchQuery} />
       )}
+      <StyledFilters>
+        <InputSelect
+          resource={suppliers}
+          displayOptions="company_name"
+          value={suppliers.id}
+          selectfor="Supplier"
+          handle={handleFilter}
+        />
+        <Button type="add" onClick={handleFilter}>
+          Filter
+        </Button>
+      </StyledFilters>
       <Table gridtemplatecolumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr">
         <TableHeader columns={7}>
           <p>Date</p>

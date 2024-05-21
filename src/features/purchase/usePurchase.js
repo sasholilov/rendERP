@@ -8,9 +8,10 @@ export function usePurchase() {
   const [searchParams] = useSearchParams();
   const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
   const searchQuery = searchParams.get("search");
+  const filter = searchParams.get("filter");
   const { isLoading, data, error } = useQuery({
-    queryKey: ["purchase", page, searchQuery],
-    queryFn: () => getPurchases({ page, searchQuery }),
+    queryKey: ["purchase", page, searchQuery, filter],
+    queryFn: () => getPurchases({ page, searchQuery, filter }),
   });
 
   const purchases = data?.data || [];
