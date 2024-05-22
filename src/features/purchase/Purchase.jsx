@@ -119,7 +119,7 @@ function Purchase() {
           handle={handleFilter}
         />
         <Button type="add" onClick={handleFilter}>
-          Filter
+          Filters
         </Button>
       </StyledFilters>
       <Table gridtemplatecolumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr">
