@@ -11,12 +11,13 @@ import Spinner from "../../ui/Spinner";
 import { useSuppliers } from "../suppliers/useSuppliers";
 import InputSelect from "../../ui/InputSelect";
 import ToggleSwitch from "../../ui/ToggleSwitch";
+import { PURCHASE_CATEGORY, PAYMENT_METHODS } from "../../utils/constants";
 
 const StyledForm = styled.form`
-  grid-column: 1 / 7;
+  grid-column: 1 / 8;
   align-items: center;
   display: grid;
-  grid-template-columns: repeat(7, minmax(120px, 1fr));
+  grid-template-columns: repeat(8, minmax(120px, 1fr));
   text-align: center;
   grid-auto-rows: auto;
   text-overflow: ellipsis;
@@ -41,6 +42,9 @@ function EditPurchase({ objectToEdit, setEditMode }) {
   const [total, setTotal] = useState(objectToEdit?.total);
   const [has_vat, setHas_vat] = useState(objectToEdit?.has_vat);
   const [isChecked, setIsChecked] = useState(objectToEdit.has_vat);
+  const [payment_method, setPayment_method] = useState(
+    objectToEdit.payment_method
+  );
 
   function handleSupplierChange(e) {
     const selectedSupplier = e.target.value;
@@ -61,6 +65,7 @@ function EditPurchase({ objectToEdit, setEditMode }) {
       invoice_number,
       total,
       has_vat,
+      payment_method,
     };
 
     editPurchase({ objectToSave, purchaseId });
@@ -89,11 +94,10 @@ function EditPurchase({ objectToEdit, setEditMode }) {
         />
       </TableData>
       <TableData>
-        <InputText
-          type="text"
-          placeholder="Category"
-          onChange={(e) => setPurchase_category(e.target.value)}
-          value={purchase_category}
+        <InputSelect
+          resource={PURCHASE_CATEGORY}
+          selectfor="Category"
+          handle={(e) => setPurchase_category(e.target.value)}
         />
       </TableData>
       <TableData>
@@ -117,6 +121,13 @@ function EditPurchase({ objectToEdit, setEditMode }) {
           checked={isChecked}
           onChange={handleToggleChange}
           isDisabled={false}
+        />
+      </TableData>
+      <TableData>
+        <InputSelect
+          resource={PAYMENT_METHODS}
+          selectfor="Payment"
+          handle={(e) => setPayment_method(e.target.value)}
         />
       </TableData>
       <TableData>

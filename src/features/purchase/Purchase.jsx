@@ -122,14 +122,15 @@ function Purchase() {
           Filters
         </Button>
       </StyledFilters>
-      <Table gridtemplatecolumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr">
-        <TableHeader columns={7}>
+      <Table gridtemplatecolumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr">
+        <TableHeader columns={8}>
           <p>Date</p>
           <p>Supplier</p>
           <p>Category</p>
           <p>Invoice number</p>
           <p>Total</p>
           <p>VAT</p>
+          <p>Payment</p>
           <p>Actions</p>
         </TableHeader>
         {editMode && (
@@ -143,7 +144,7 @@ function Purchase() {
           purchases.map((pur, index) => (
             <TableDataRow
               key={`${pur.id}-${index}`}
-              columns={7}
+              columns={8}
               resource={{
                 purchase_date: formatDate(pur.purchase_date),
                 supplier: pur.suppliers.company_name,
@@ -153,6 +154,7 @@ function Purchase() {
                 has_vat: (
                   <ToggleSwitch checked={pur.has_vat} isDisabled={true} />
                 ),
+                payment_method: pur.payment_method,
               }}
             >
               <EditIcon onClick={() => handleEditPurchase(pur.id)} />

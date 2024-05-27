@@ -14,3 +14,5 @@ export const PURCHASE_CATEGORY = [
   "Financial Services",
   "Health and Safety",
 ];
+
+export const PAYMENT_METHODS = ["Cash", "Bank", "Card"];
