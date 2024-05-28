@@ -10,6 +10,7 @@ import { useAddPurchase } from "./useAddPurchase";
 import { useState, useRef } from "react";
 import { toast } from "react-hot-toast";
 import { useSuppliers } from "../suppliers/useSuppliers";
+import { isPaid } from "../../utils/helpers";
 import { PURCHASE_CATEGORY, PAYMENT_METHODS } from "../../utils/constants";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -17,10 +18,10 @@ import "./custom-datepicker.css";
 import ToggleSwitch from "../../ui/ToggleSwitch";
 
 const StyledForm = styled.form`
-  grid-column: 1 / 8;
+  grid-column: 1 / 9;
   align-items: center;
   display: grid;
-  grid-template-columns: repeat(8, minmax(160px, 1fr));
+  grid-template-columns: repeat(9, minmax(160px, 1fr));
   text-align: center;
 `;
 
@@ -36,6 +37,7 @@ function AddPurchase() {
   const [total, setTotal] = useState("");
   const [isChecked, setIsChecked] = useState(true);
   const [payment_method, setPayment_method] = useState("");
+  const [status, setStatus] = useState(total);
 
   function handleToggleChange(e) {
     setHas_vat(e.target.checked);
@@ -52,6 +54,7 @@ function AddPurchase() {
       has_vat,
       total,
       payment_method,
+      status: isPaid(Number(total), Number(status)),
     };
 
     if (
@@ -60,6 +63,7 @@ function AddPurchase() {
       !purchase_category ||
       !invoice_number ||
       !payment_method ||
+      !status ||
       !total
     ) {
       toast.error("Please fill all fields");
@@ -130,6 +134,14 @@ function AddPurchase() {
           resource={PAYMENT_METHODS}
           selectfor="Payment"
           handle={(e) => setPayment_method(e.target.value)}
+        />
+      </TableData>
+      <TableData>
+        <InputText
+          type="text"
+          placeholder="Paid amount"
+          value={total}
+          onChange={(e) => setStatus(e.target.value)}
         />
       </TableData>
       <TableData>

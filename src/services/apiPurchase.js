@@ -5,7 +5,7 @@ export async function getPurchases({ page, searchQuery, filter }) {
   let query = supabase
     .from("purchase")
     .select(
-      `id, purchase_date, suppliers(company_name, id), purchase_category, invoice_number, total, has_vat, payment_method`,
+      `id, purchase_date, suppliers(company_name, id), purchase_category, invoice_number, total, has_vat, payment_method, status`,
       { count: "exact" }
     )
     .order("created_at", { ascending: false });
