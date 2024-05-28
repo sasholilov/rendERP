@@ -17,5 +17,6 @@ export function useAddPurchase() {
       queryClient.invalidateQueries("purchases");
     },
   });
+
   return { isAdding, addPurchase };
 }

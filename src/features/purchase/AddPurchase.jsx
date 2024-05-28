@@ -54,7 +54,7 @@ function AddPurchase() {
       has_vat,
       total,
       payment_method,
-      status: isPaid(Number(total), Number(status)),
+      status: isPaid(Number(total), Number(status ? status : total)),
     };
 
     if (
@@ -63,12 +63,19 @@ function AddPurchase() {
       !purchase_category ||
       !invoice_number ||
       !payment_method ||
-      !status ||
       !total
     ) {
       toast.error("Please fill all fields");
       return;
     }
+
+    if (total < status) {
+      toast.error(
+        "The payment can not be greater than the total amaount of the purchase"
+      );
+      return;
+    }
+
     if (isAdding) return <Spinner />;
     addPurchase({ ...purchaseObj }, { onSuccess: ref.current.reset() });
   }
