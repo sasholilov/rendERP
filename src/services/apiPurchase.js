@@ -40,7 +40,7 @@ export async function addPurchase(newPurchase) {
 
   const { data: insertedData, error: insertError } = await query
     .insert(newPurchase)
-    .single();
+    .select("*");
 
   if (insertError) {
     console.log(insertError);

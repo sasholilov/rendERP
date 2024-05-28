@@ -77,7 +77,15 @@ function AddPurchase() {
     }
 
     if (isAdding) return <Spinner />;
-    addPurchase({ ...purchaseObj }, { onSuccess: ref.current.reset() });
+    addPurchase(
+      { ...purchaseObj },
+      {
+        onSuccess: (newPurchase) => {
+          ref.current.reset();
+          console.log(newPurchase[0].id);
+        },
+      }
+    );
   }
 
   function handleSupplierChange(e) {

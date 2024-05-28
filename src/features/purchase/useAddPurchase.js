@@ -6,11 +6,12 @@ export function useAddPurchase() {
   const queryClient = useQueryClient();
   const { mutate: addPurchase, isLoading: isAdding } = useMutation({
     mutationFn: addPurchaseApi,
-    onSuccess: () => {
+    onSuccess: (newPurchase) => {
       toast.success("Purchase added successfully");
       queryClient.invalidateQueries({
         queryKey: ["purchases"],
       });
+      return newPurchase;
     },
     onError: (err) => toast.error(err.message),
     onSettled: () => {
