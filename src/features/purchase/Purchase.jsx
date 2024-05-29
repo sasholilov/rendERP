@@ -47,6 +47,7 @@ function Purchase() {
   const [filterValue, setFilterValue] = useState("");
   const [purchaseToEdit, setPurchaseToEdit] = useState({});
   const [showModal, setShowModal] = useState(false);
+  const [purchaseDetail, setPurchaseDetail] = useState(0);
   const addModeButton = addMode === true ? "close" : "add";
 
   const titleMode = addMode
@@ -80,12 +81,17 @@ function Purchase() {
     setEditMode(!editMode);
   }
 
-  function handleDelete(purID) {
-    if (window.confirm("Are you sure?")) deletePur(purID);
+  function handleDelete(purId) {
+    if (window.confirm("Are you sure?")) deletePur(purId);
   }
 
   function handleFilter(e) {
     setFilterValue(e.target.value);
+  }
+
+  function handleShowModal(purId) {
+    setShowModal(!showModal);
+    setPurchaseDetail(purId);
   }
 
   if (count === 0 && !searchParams)
@@ -99,7 +105,13 @@ function Purchase() {
     );
   return (
     <>
-      {showModal && <Modal showModal={showModal} setShowModal={setShowModal} />}
+      {showModal && (
+        <Modal
+          showModal={showModal}
+          setShowModal={setShowModal}
+          purchase={purchaseDetail}
+        />
+      )}
       <Title>{titleMode}</Title>
       {!editMode && (
         <FeatureHeader
@@ -165,7 +177,7 @@ function Purchase() {
             >
               <EditIcon onClick={() => handleEditPurchase(pur.id)} />
               <DeleteIcon onClick={() => handleDelete(pur.id)} />
-              <DetailsIcon onClick={() => setShowModal(!showModal)} />
+              <DetailsIcon onClick={() => handleShowModal(pur.id)} />
             </TableDataRow>
           ))}
       </Table>

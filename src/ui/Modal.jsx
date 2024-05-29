@@ -67,9 +67,10 @@ const StyledDataInLi = styled.div`
   }
 `;
 
-function Modal({ showModal, setShowModal }) {
+function Modal({ showModal, setShowModal, purchase }) {
   return (
     <StyledModal>
+      <p>test: {purchase}</p>
       <Title>Payments for Invoice #9988272</Title>
       <h3>Due amount: 100лв</h3>
       <CloseModal onClick={() => setShowModal(!showModal)}>
@@ -95,6 +96,7 @@ function Modal({ showModal, setShowModal }) {
 Modal.propTypes = {
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,
+  purchase: PropTypes.number,
 };
 
 export default Modal;
