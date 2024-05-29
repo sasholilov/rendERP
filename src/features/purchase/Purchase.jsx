@@ -92,6 +92,8 @@ function Purchase() {
   function handleShowModal(purId) {
     setShowModal(!showModal);
     setPurchaseDetail(purId);
+    searchParams.set("details", purId);
+    setSearchParams(searchParams);
   }
 
   if (count === 0 && !searchParams)

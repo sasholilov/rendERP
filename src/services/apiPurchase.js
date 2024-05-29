@@ -1,7 +1,12 @@
 import supabase from "./supabase";
 import { PAGE_SIZE } from "../utils/constants";
 
-export async function getPurchases({ page, searchQuery, filter }) {
+export async function getPurchases({
+  page,
+  searchQuery,
+  filter,
+  paymentDetails,
+}) {
   let query = supabase
     .from("purchase")
     .select(
@@ -24,6 +29,10 @@ export async function getPurchases({ page, searchQuery, filter }) {
 
   if (filter) {
     query = query.eq("supplier_id", filter);
+  }
+
+  if (paymentDetails) {
+    query = query.eq("id", paymentDetails);
   }
 
   const { data, error, count } = await query;
