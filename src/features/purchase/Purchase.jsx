@@ -21,6 +21,7 @@ import ToggleSwitch from "../../ui/ToggleSwitch";
 import Button from "../../ui/Button";
 import { useSuppliers } from "../suppliers/useSuppliers";
 import InputSelect from "../../ui/InputSelect";
+import Modal from "../../ui/Modal";
 
 const StyledResultTitle = styled.h3`
   text-align: center;
@@ -45,6 +46,7 @@ function Purchase() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterValue, setFilterValue] = useState("");
   const [purchaseToEdit, setPurchaseToEdit] = useState({});
+  const [showModal, setShowModal] = useState(false);
   const addModeButton = addMode === true ? "close" : "add";
 
   const titleMode = addMode
@@ -97,6 +99,7 @@ function Purchase() {
     );
   return (
     <>
+      {showModal && <Modal showModal={showModal} setShowModal={setShowModal} />}
       <Title>{titleMode}</Title>
       {!editMode && (
         <FeatureHeader
@@ -162,7 +165,7 @@ function Purchase() {
             >
               <EditIcon onClick={() => handleEditPurchase(pur.id)} />
               <DeleteIcon onClick={() => handleDelete(pur.id)} />
-              <DetailsIcon />
+              <DetailsIcon onClick={() => setShowModal(!showModal)} />
             </TableDataRow>
           ))}
       </Table>

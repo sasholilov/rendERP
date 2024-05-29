@@ -1,5 +1,7 @@
+import Title from "../ui/Title";
+
 function Invoicing() {
-  return <div>Invoicing</div>;
+  return <Title>Invoicing</Title>;
 }
 
 export default Invoicing;
