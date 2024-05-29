@@ -12,10 +12,10 @@ import { toast } from "react-hot-toast";
 import { useSuppliers } from "../suppliers/useSuppliers";
 import { isPaid } from "../../utils/helpers";
 import { PURCHASE_CATEGORY, PAYMENT_METHODS } from "../../utils/constants";
-
 import "react-datepicker/dist/react-datepicker.css";
 import "./custom-datepicker.css";
 import ToggleSwitch from "../../ui/ToggleSwitch";
+import { addPayment } from "../../services/apiPayments";
 
 const StyledForm = styled.form`
   grid-column: 1 / 9;
@@ -82,7 +82,11 @@ function AddPurchase() {
       {
         onSuccess: (newPurchase) => {
           ref.current.reset();
-          console.log(newPurchase[0].id);
+          const paymentObj = {
+            payment_amount: status ? status : total,
+            purchase_id: newPurchase[0].id,
+          };
+          addPayment({ ...paymentObj });
         },
       }
     );

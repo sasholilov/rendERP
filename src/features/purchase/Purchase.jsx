@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import DeleteIcon from "../../ui/DeleteIcon";
 import EditIcon from "../../ui/EditIcon";
+import DetailsIcon from "../../ui/DetailsIcon";
 import Spinner from "../../ui/Spinner";
 import Table from "../../ui/Table";
 import TableDataRow from "../../ui/TableDataRow";
@@ -161,6 +162,7 @@ function Purchase() {
             >
               <EditIcon onClick={() => handleEditPurchase(pur.id)} />
               <DeleteIcon onClick={() => handleDelete(pur.id)} />
+              <DetailsIcon />
             </TableDataRow>
           ))}
       </Table>
