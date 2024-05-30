@@ -69,7 +69,7 @@ function AddPurchase() {
       return;
     }
 
-    if (total < status) {
+    if (Number(total) < Number(status)) {
       toast.error(
         "The payment can not be greater than the total amaount of the purchase"
       );

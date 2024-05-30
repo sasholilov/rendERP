@@ -90,6 +90,8 @@ function Purchase() {
   }
 
   function handleShowPayments(purId) {
+    if (searchParams.get("page")) searchParams.set("page", 1);
+    setSearchParams(searchParams);
     setShowPayments(!showPayments);
     setPurchaseDetail(purId);
     searchParams.set("details", purId);

@@ -10,8 +10,16 @@ import { formatDate } from "../../utils/helpers";
 import Button from "../../ui/Button";
 import InputText from "../../ui/InputText";
 import { useAddPayment } from "./useAddPayment";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useEditPurchase } from "./useEditPurchase";
+
+const StyledForm = styled.form`
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`;
 
 const StyledModal = styled.div`
   width: 40%;
@@ -78,11 +86,13 @@ const StyledDataInLi = styled.div`
 `;
 
 function Payments({ showPayments, setShowPayments, purchaseId }) {
+  const ref = useRef();
   const { purchases, isLoading } = usePurchase(purchaseId);
   const { payments, isLoadingPayments } = usePayment(purchaseId);
   const { addPayment, isAdding } = useAddPayment();
   const { isEditing, editPurchase } = useEditPurchase();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [checkForPaid, setCheckForPaid] = useState(false);
   const invoiceNumber = purchases[0].invoice_number;
   const totalPayments = payments.reduce(
     (acc, cur) => acc + cur.payment_amount,
@@ -97,36 +107,40 @@ function Payments({ showPayments, setShowPayments, purchaseId }) {
   }
 
   function handleAddPayment(e) {
+    e.preventDefault();
+    setCheckForPaid(true);
     const paymentObj = {
       purchase_id: purchaseId,
       payment_amount: e.target.previousSibling.value,
     };
     addPayment({ ...paymentObj });
+    ref.current.reset();
   }
 
   useEffect(() => {
     console.log(dueAmount);
-    if (dueAmount === 0) {
+    if (dueAmount === 0 && checkForPaid) {
+      setCheckForPaid(false);
       const objectToSave = {
         status: "Paid",
       };
       editPurchase({ objectToSave, purchaseId });
     }
-  }, [dueAmount]);
+  }, [dueAmount, editPurchase, purchaseId]);
 
   if (isLoading || isLoadingPayments || isAdding || isEditing)
     return <Spinner />;
 
   return (
     <StyledModal>
-      <p>test: {purchaseId}</p>
       <Title>Payments for Invoice #{invoiceNumber}</Title>
-      <h3>Due amount: {dueAmount}</h3>
-      <p>Total: {purchases[0]?.total}</p>
-      <p>Payments: {totalPayments}</p>
+      <p>Due amount: {dueAmount}</p>
+      <p>Invoice amount: {purchases[0]?.total}</p>
+      <p>Payments sum: {totalPayments}</p>
       <CloseModal onClick={handleCloseModal}>
         <RiCloseLine />
       </CloseModal>
+      <p>History of the payments:</p>
       <ul>
         {payments.map((payment) => (
           <li key={payment.id}>
@@ -137,10 +151,16 @@ function Payments({ showPayments, setShowPayments, purchaseId }) {
           </li>
         ))}
       </ul>
-      <InputText />
-      <Button type="add" onClick={handleAddPayment}>
-        Add payment
-      </Button>
+      {dueAmount > 0 ? (
+        <StyledForm ref={ref}>
+          <InputText />
+          <Button type="add" onClick={(e) => handleAddPayment(e)}>
+            Add payment
+          </Button>
+        </StyledForm>
+      ) : (
+        <h2>Paid</h2>
+      )}
     </StyledModal>
   );
 }
