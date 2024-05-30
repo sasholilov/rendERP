@@ -21,7 +21,7 @@ import ToggleSwitch from "../../ui/ToggleSwitch";
 import Button from "../../ui/Button";
 import { useSuppliers } from "../suppliers/useSuppliers";
 import InputSelect from "../../ui/InputSelect";
-import Modal from "../../ui/Modal";
+import Payments from "./Payments";
 
 const StyledResultTitle = styled.h3`
   text-align: center;
@@ -46,7 +46,7 @@ function Purchase() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterValue, setFilterValue] = useState("");
   const [purchaseToEdit, setPurchaseToEdit] = useState({});
-  const [showModal, setShowModal] = useState(false);
+  const [showPayments, setShowPayments] = useState(false);
   const [purchaseDetail, setPurchaseDetail] = useState(0);
   const addModeButton = addMode === true ? "close" : "add";
 
@@ -89,8 +89,8 @@ function Purchase() {
     setFilterValue(e.target.value);
   }
 
-  function handleShowModal(purId) {
-    setShowModal(!showModal);
+  function handleShowPayments(purId) {
+    setShowPayments(!showPayments);
     setPurchaseDetail(purId);
     searchParams.set("details", purId);
     setSearchParams(searchParams);
@@ -107,10 +107,10 @@ function Purchase() {
     );
   return (
     <>
-      {showModal && (
-        <Modal
-          showModal={showModal}
-          setShowModal={setShowModal}
+      {showPayments && (
+        <Payments
+          showPayments={showPayments}
+          setShowPayments={setShowPayments}
           purchase={purchaseDetail}
         />
       )}
@@ -179,7 +179,7 @@ function Purchase() {
             >
               <EditIcon onClick={() => handleEditPurchase(pur.id)} />
               <DeleteIcon onClick={() => handleDelete(pur.id)} />
-              <DetailsIcon onClick={() => handleShowModal(pur.id)} />
+              <DetailsIcon onClick={() => handleShowPayments(pur.id)} />
             </TableDataRow>
           ))}
       </Table>

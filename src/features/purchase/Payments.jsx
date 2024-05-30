@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import Title from "../ui/Title";
+import Title from "../../ui/Title";
 import { RiCloseLine } from "react-icons/ri";
 import PropTypes from "prop-types";
-import { usePurchase } from "../features/purchase/usePurchase";
+import { usePurchase } from "./usePurchase";
 import { useSearchParams } from "react-router-dom";
 
 const StyledModal = styled.div`
@@ -69,13 +69,13 @@ const StyledDataInLi = styled.div`
   }
 `;
 
-function Modal({ showModal, setShowModal, purchase }) {
+function Payments({ showPayments, setShowPayments, purchase }) {
   const { purchases } = usePurchase(purchase);
   const [searchParams, setSearchParams] = useSearchParams();
   const invoiceNumber = purchases[0].invoice_number;
 
   function handleCloseModal() {
-    setShowModal(!showModal);
+    setShowPayments(!showPayments);
     searchParams.delete("details");
     setSearchParams(searchParams);
   }
@@ -105,11 +105,11 @@ function Modal({ showModal, setShowModal, purchase }) {
     </StyledModal>
   );
 }
-Modal.propTypes = {
-  showModal: PropTypes.bool,
-  setShowModal: PropTypes.func,
+Payments.propTypes = {
+  showPayments: PropTypes.bool,
+  setShowPayments: PropTypes.func,
   purchase: PropTypes.number,
   setPurchase: PropTypes.func,
 };
 
-export default Modal;
+export default Payments;

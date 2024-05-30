@@ -67,8 +67,6 @@ export async function editPurchase(objectToSave, purchaseId) {
     .eq("id", purchaseId)
     .single();
 
-  console.log("from api", purchaseId);
-
   if (updateError) {
     console.error(updateError);
     throw new Error("There is an error updating the purchase");
