@@ -3,7 +3,15 @@ import Title from "../../ui/Title";
 import { RiCloseLine } from "react-icons/ri";
 import PropTypes from "prop-types";
 import { usePurchase } from "./usePurchase";
+import { usePayment } from "./usePayment";
 import { useSearchParams } from "react-router-dom";
+import Spinner from "../../ui/Spinner";
+import { formatDate } from "../../utils/helpers";
+import Button from "../../ui/Button";
+import InputText from "../../ui/InputText";
+import { useAddPayment } from "./useAddPayment";
+import { useEffect } from "react";
+import { useEditPurchase } from "./useEditPurchase";
 
 const StyledModal = styled.div`
   width: 40%;
@@ -69,10 +77,18 @@ const StyledDataInLi = styled.div`
   }
 `;
 
-function Payments({ showPayments, setShowPayments, purchase }) {
-  const { purchases } = usePurchase(purchase);
+function Payments({ showPayments, setShowPayments, purchaseId }) {
+  const { purchases, isLoading } = usePurchase(purchaseId);
+  const { payments, isLoadingPayments } = usePayment(purchaseId);
+  const { addPayment, isAdding } = useAddPayment();
+  const { isEditing, editPurchase } = useEditPurchase();
   const [searchParams, setSearchParams] = useSearchParams();
   const invoiceNumber = purchases[0].invoice_number;
+  const totalPayments = payments.reduce(
+    (acc, cur) => acc + cur.payment_amount,
+    0
+  );
+  const dueAmount = purchases[0]?.total - totalPayments;
 
   function handleCloseModal() {
     setShowPayments(!showPayments);
@@ -80,35 +96,58 @@ function Payments({ showPayments, setShowPayments, purchase }) {
     setSearchParams(searchParams);
   }
 
+  function handleAddPayment(e) {
+    const paymentObj = {
+      purchase_id: purchaseId,
+      payment_amount: e.target.previousSibling.value,
+    };
+    addPayment({ ...paymentObj });
+  }
+
+  useEffect(() => {
+    console.log(dueAmount);
+    if (dueAmount === 0) {
+      const objectToSave = {
+        status: "Paid",
+      };
+      editPurchase({ objectToSave, purchaseId });
+    }
+  }, [dueAmount]);
+
+  if (isLoading || isLoadingPayments || isAdding || isEditing)
+    return <Spinner />;
+
   return (
     <StyledModal>
-      <p>test: {purchase}</p>
+      <p>test: {purchaseId}</p>
       <Title>Payments for Invoice #{invoiceNumber}</Title>
-      <h3>Due amount: 100лв</h3>
+      <h3>Due amount: {dueAmount}</h3>
+      <p>Total: {purchases[0]?.total}</p>
+      <p>Payments: {totalPayments}</p>
       <CloseModal onClick={handleCloseModal}>
         <RiCloseLine />
       </CloseModal>
       <ul>
-        <li>
-          <StyledDataInLi>
-            <p>Date: 22.05.2024</p>
-            <p>Payment: 500</p>
-          </StyledDataInLi>
-        </li>
-        <li>
-          <StyledDataInLi>
-            <p>Date: 22.05.2024</p>
-            <p>Payment: 500</p>
-          </StyledDataInLi>
-        </li>
+        {payments.map((payment) => (
+          <li key={payment.id}>
+            <StyledDataInLi>
+              <p>Date: {formatDate(payment?.created_at)}</p>
+              <p>Payment: {payment?.payment_amount}</p>
+            </StyledDataInLi>
+          </li>
+        ))}
       </ul>
+      <InputText />
+      <Button type="add" onClick={handleAddPayment}>
+        Add payment
+      </Button>
     </StyledModal>
   );
 }
 Payments.propTypes = {
   showPayments: PropTypes.bool,
   setShowPayments: PropTypes.func,
-  purchase: PropTypes.number,
+  purchaseId: PropTypes.number,
   setPurchase: PropTypes.func,
 };
 

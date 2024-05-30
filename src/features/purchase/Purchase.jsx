@@ -111,7 +111,7 @@ function Purchase() {
         <Payments
           showPayments={showPayments}
           setShowPayments={setShowPayments}
-          purchase={purchaseDetail}
+          purchaseId={purchaseDetail}
         />
       )}
       <Title>{titleMode}</Title>
