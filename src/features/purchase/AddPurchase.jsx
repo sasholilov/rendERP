@@ -86,7 +86,7 @@ function AddPurchase() {
             payment_amount: status ? status : total,
             purchase_id: newPurchase[0].id,
           };
-          addPayment({ ...paymentObj });
+          if (status > 0) addPayment({ ...paymentObj });
         },
       }
     );
