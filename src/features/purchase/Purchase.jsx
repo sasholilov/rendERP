@@ -22,6 +22,7 @@ import Button from "../../ui/Button";
 import { useSuppliers } from "../suppliers/useSuppliers";
 import InputSelect from "../../ui/InputSelect";
 import Payments from "./Payments";
+import StatusUi from "../../ui/StatusUi";
 
 const StyledResultTitle = styled.h3`
   text-align: center;
@@ -176,7 +177,9 @@ function Purchase() {
                   <ToggleSwitch checked={pur.has_vat} isDisabled={true} />
                 ),
                 payment_method: pur.payment_method,
-                status: pur.status,
+                status: (
+                  <StatusUi statusType={pur.status}>{pur.status}</StatusUi>
+                ),
               }}
             >
               <EditIcon onClick={() => handleEditPurchase(pur.id)} />
