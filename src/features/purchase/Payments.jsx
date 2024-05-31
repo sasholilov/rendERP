@@ -34,12 +34,18 @@ const StyledModal = styled.div`
   z-index: 999;
 
   & h3 {
-    font-size: 14px;
+    font-size: 18px;
     text-transform: uppercase;
-    color: var(--color-grey-4);
-    font-weight: 500;
+    color: var(--color-light);
+    background-color: var(--color-green-1);
+    font-weight: 700;
+    padding-top: 8px;
+    padding-bottom: 8px;
     line-height: 28px;
-    padding-left: 10px;
+    margin: 0 auto;
+    text-align: center;
+    border-radius: var(--border-radius-8);
+    max-width: 120px;
   }
 
   & ul {
@@ -159,7 +165,7 @@ function Payments({ showPayments, setShowPayments, purchaseId }) {
           </Button>
         </StyledForm>
       ) : (
-        <h2>Paid</h2>
+        <h3>Paid</h3>
       )}
     </StyledModal>
   );
