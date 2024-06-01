@@ -6,7 +6,7 @@ import { usePurchase } from "./usePurchase";
 import { usePayment } from "./usePayment";
 import { useSearchParams } from "react-router-dom";
 import Spinner from "../../ui/Spinner";
-import { formatDate } from "../../utils/helpers";
+import { formatDate, formatPrice } from "../../utils/helpers";
 import Button from "../../ui/Button";
 import InputText from "../../ui/InputText";
 import { useAddPayment } from "./useAddPayment";
@@ -22,7 +22,9 @@ const StyledForm = styled.form`
 `;
 
 const StyledModal = styled.div`
-  width: 40%;
+  width: 35%;
+  height: 600px;
+  overflow-y: scroll;
   border-radius: 4px;
   background-color: #fff;
   box-shadow: 0 4px 20px 1px rgba(0, 0, 0, 0.03), 0 1px 4px rgba(0, 0, 0, 0.02);
@@ -30,7 +32,7 @@ const StyledModal = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 20px;
+  padding: 40px;
   z-index: 999;
 
   & h3 {
@@ -51,7 +53,7 @@ const StyledModal = styled.div`
   & ul {
     margin: 0 auto;
     list-style: none;
-    padding: 15px;
+    padding: 0 0 30px 0;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -84,11 +86,23 @@ const CloseModal = styled.span`
 const StyledDataInLi = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   & p {
-    padding: 0;
+    padding: 0px 0px 0px 0px;
     margin: 0;
+    color: var(--color-grey-3);
   }
+
+  & span {
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--color-grey-3);
+  }
+`;
+
+const StyledDataSums = styled(StyledDataInLi)`
+  padding-bottom: 20px;
 `;
 
 function Payments({ showPayments, setShowPayments, purchaseId }) {
@@ -150,19 +164,24 @@ function Payments({ showPayments, setShowPayments, purchaseId }) {
   return (
     <StyledModal>
       <Title>Payments for Invoice #{invoiceNumber}</Title>
-      <p>Due amount: {dueAmount}</p>
-      <p>Invoice amount: {purchases[0]?.total}</p>
-      <p>Payments sum: {totalPayments}</p>
+      <StyledDataSums>
+        <p>Invoice amount:</p> <span>{formatPrice(totalAmount)}</span>
+      </StyledDataSums>
+      <StyledDataSums>
+        <p>Payments:</p> <span>{formatPrice(totalPayments)}</span>
+      </StyledDataSums>
+      <StyledDataSums>
+        <p>Due amount:</p> <span>{formatPrice(dueAmount)}</span>
+      </StyledDataSums>
       <CloseModal onClick={handleCloseModal}>
         <RiCloseLine />
       </CloseModal>
-      <p>History of the payments:</p>
       <ul>
         {payments.map((payment) => (
           <li key={payment.id}>
             <StyledDataInLi>
               <p>Date: {formatDate(payment?.created_at)}</p>
-              <p>Payment: {payment?.payment_amount}</p>
+              <p>Payment: {formatPrice(payment?.payment_amount)}</p>
             </StyledDataInLi>
           </li>
         ))}
