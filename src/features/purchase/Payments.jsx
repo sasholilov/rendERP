@@ -105,6 +105,7 @@ function Payments({ showPayments, setShowPayments, purchaseId }) {
     0
   );
   const dueAmount = purchases[0]?.total - totalPayments;
+  const totalAmount = purchases[0]?.total;
 
   function handleCloseModal() {
     setShowPayments(!showPayments);
@@ -124,12 +125,21 @@ function Payments({ showPayments, setShowPayments, purchaseId }) {
   }
 
   useEffect(() => {
-    console.log(dueAmount);
     if (dueAmount === 0 && checkForPaid) {
       setCheckForPaid(false);
-      const objectToSave = {
+      let objectToSave = {
         status: "Paid",
       };
+
+      editPurchase({ objectToSave, purchaseId });
+    }
+
+    if (dueAmount > 0 && dueAmount < totalAmount && checkForPaid) {
+      setCheckForPaid(false);
+      let objectToSave = {
+        status: "Partial",
+      };
+
       editPurchase({ objectToSave, purchaseId });
     }
   }, [dueAmount, editPurchase, purchaseId]);
