@@ -45,7 +45,9 @@ function Purchase() {
   const [editMode, setEditMode] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
-  const [filterValue, setFilterValue] = useState("");
+  const [filterValue, setFilterValue] = useState({
+    supplier_id: "",
+  });
   const [purchaseToEdit, setPurchaseToEdit] = useState({});
   const [showPayments, setShowPayments] = useState(false);
   const [purchaseDetail, setPurchaseDetail] = useState(0);
@@ -57,13 +59,17 @@ function Purchase() {
     ? "Purchase - Editing"
     : "Purchase";
 
+  function hasValues(obj) {
+    return Object.values(obj).every((value) => value !== "");
+  }
+
   useEffect(() => {
     if (searchQuery) {
       searchParams.set("search", searchQuery);
       setSearchParams(searchParams);
     }
-    if (filterValue) {
-      searchParams.set("filter", filterValue);
+    if (hasValues(filterValue)) {
+      searchParams.set(`${Object.keys(filterValue)}`, filterValue.supplier_id);
       setSearchParams(searchParams);
     }
     if (searchQuery || filterValue === "") {
@@ -87,7 +93,10 @@ function Purchase() {
   }
 
   function handleFilter(e) {
-    setFilterValue(e.target.value);
+    setFilterValue((prev) => ({
+      ...prev,
+      supplier_id: e.target.value,
+    }));
   }
 
   function handleShowPayments(purId) {
@@ -178,7 +187,7 @@ function Purchase() {
                 ),
                 payment_method: pur.payment_method,
                 status: (
-                  <StatusUi statusType={pur.status}>{pur.status}</StatusUi>
+                  <StatusUi statustype={pur.status}>{pur.status}</StatusUi>
                 ),
               }}
             >

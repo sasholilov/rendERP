@@ -18,7 +18,7 @@ const StatusUi = styled.div`
 `;
 
 function Status({ statusType }) {
-  return <Status statusType={statusType} />;
+  return <Status statustype={statusType} />;
 }
 
 Status.propTypes = {
