@@ -30,6 +30,22 @@ export async function getSuppliers({ page, searchQuery }) {
   return { data, count };
 }
 
+export async function getAllSuppliers() {
+  let query = supabase
+    .from("suppliers")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  const { data, error } = await query;
+
+  if (error) {
+    console.log(error);
+    throw new Error("Suppliers could not be loaded");
+  }
+
+  return { data };
+}
+
 export async function deleteSupplier(id) {
   const { data, error } = await supabase
     .from("suppliers")

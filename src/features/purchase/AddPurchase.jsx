@@ -9,7 +9,7 @@ import DatePicker from "react-datepicker";
 import { useAddPurchase } from "./useAddPurchase";
 import { useState, useRef } from "react";
 import { toast } from "react-hot-toast";
-import { useSuppliers } from "../suppliers/useSuppliers";
+import { useAllSuppliers } from "../suppliers/useAllSuppliers";
 import { isPaid } from "../../utils/helpers";
 import { PURCHASE_CATEGORY, PAYMENT_METHODS } from "../../utils/constants";
 import "react-datepicker/dist/react-datepicker.css";
@@ -28,7 +28,7 @@ const StyledForm = styled.form`
 function AddPurchase() {
   const ref = useRef();
   const { isAdding, addPurchase } = useAddPurchase();
-  const { isLoading, suppliers } = useSuppliers();
+  const { isLoading, suppliers } = useAllSuppliers();
   const [purchase_date, setPurchase_date] = useState("");
   const [supplier_id, setSupplier_id] = useState("");
   const [purchase_category, setPurchase_category] = useState("");
