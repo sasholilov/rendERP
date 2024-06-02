@@ -18,24 +18,15 @@ import SearchResult from "../../ui/SearchResult";
 import AddPurchase from "./AddPurchase";
 import EditPurchase from "./EditPurchase";
 import ToggleSwitch from "../../ui/ToggleSwitch";
-import Button from "../../ui/Button";
 import { useSuppliers } from "../suppliers/useSuppliers";
-import InputSelect from "../../ui/InputSelect";
 import Payments from "./Payments";
 import StatusUi from "../../ui/StatusUi";
+import FilterPurchase from "./FilterPurchase";
 import { PURCHASE_CATEGORY } from "../../utils/constants";
 
 const StyledResultTitle = styled.h3`
   text-align: center;
   color: var(--color-grey-4);
-`;
-
-const StyledFilters = styled.div`
-  display: flex;
-  gap: 1rem;
-  padding-bottom: 0;
-  margin: 0;
-  margin-bottom: 10px;
 `;
 
 function Purchase() {
@@ -46,10 +37,6 @@ function Purchase() {
   const [editMode, setEditMode] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
-  const [filterValue, setFilterValue] = useState({
-    supplier_id: "",
-    purchase_category: "",
-  });
   const [purchaseToEdit, setPurchaseToEdit] = useState({});
   const [showPayments, setShowPayments] = useState(false);
   const [purchaseDetail, setPurchaseDetail] = useState(0);
@@ -61,29 +48,17 @@ function Purchase() {
     ? "Purchase - Editing"
     : "Purchase";
 
-  function hasValues(obj) {
-    return Object.values(obj).some((value) => value !== "");
-  }
-
   useEffect(() => {
     if (searchQuery) {
       searchParams.set("search", searchQuery);
       setSearchParams(searchParams);
     }
-    if (hasValues(filterValue)) {
-      const newSearchParams = new URLSearchParams();
-      for (const [key, value] of Object.entries(filterValue)) {
-        if (value) {
-          newSearchParams.set(key, value);
-        }
-      }
-      setSearchParams(newSearchParams);
-    }
-    if (searchQuery || filterValue === "") {
+
+    if (searchQuery) {
       searchParams.delete("search");
       setSearchParams(searchParams);
     }
-  }, [searchQuery, searchParams, setSearchParams, filterValue]);
+  }, [searchQuery, searchParams, setSearchParams]);
 
   if (isLoading || isDeleting) return <Spinner />;
 
@@ -97,20 +72,6 @@ function Purchase() {
 
   function handleDelete(purId) {
     if (window.confirm("Are you sure?")) deletePur(purId);
-  }
-
-  function handleFilterSuppliers(e) {
-    setFilterValue((prev) => ({
-      ...prev,
-      supplier_id: e.target.value,
-    }));
-  }
-
-  function handleFilterCategory(e) {
-    setFilterValue((prev) => ({
-      ...prev,
-      purchase_category: e.target.value,
-    }));
   }
 
   function handleShowPayments(purId) {
@@ -154,23 +115,11 @@ function Purchase() {
       {searchQuery && (
         <SearchResult feature={purchases} searchQuery={searchQuery} />
       )}
-      <StyledFilters>
-        <InputSelect
-          resource={suppliers}
-          displayOptions="company_name"
-          value={suppliers.id}
-          selectfor="Supplier"
-          handle={handleFilterSuppliers}
-        />
-        <InputSelect
-          resource={PURCHASE_CATEGORY}
-          selectfor="Category"
-          handle={handleFilterCategory}
-        />
-        <Button type="add" onClick={handleFilterSuppliers}>
-          Filters
-        </Button>
-      </StyledFilters>
+
+      {suppliers && (
+        <FilterPurchase suppliers={suppliers} category={PURCHASE_CATEGORY} />
+      )}
+
       <Table gridtemplatecolumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr">
         <TableHeader columns={9}>
           <p>Date</p>
