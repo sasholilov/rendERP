@@ -12,6 +12,7 @@ export function usePurchase() {
     supplier_id: searchParams.get("supplier_id"),
     purchase_category: searchParams.get("purchase_category"),
     invoice_number: searchParams.get("invoice_number"),
+    total: searchParams.get("total"),
   };
   const paymentDetails = searchParams.get("details");
   const { isLoading, data, error } = useQuery({

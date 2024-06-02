@@ -27,11 +27,18 @@ function FilterPurchase({ suppliers, category }) {
     supplier_id: "",
     purchase_category: "",
     invoice_number: "",
+    total: "",
   });
 
   const categoryValue = searchParams.get("purchase_category");
   const supplierId = searchParams.get("supplier_id");
   const invoiceNumberValue = searchParams.get("invoice_number");
+  let gtTotalValue = "";
+  let ltTotalValue = "";
+  if (searchParams.get("total")) {
+    gtTotalValue = searchParams.get("total").split("-")[0];
+    ltTotalValue = searchParams.get("total").split("-")[1];
+  }
 
   function hasValues(obj) {
     return Object.values(obj).some((value) => value !== "");
@@ -70,6 +77,16 @@ function FilterPurchase({ suppliers, category }) {
     }));
   }
 
+  function handleFilterRangeTotal(e) {
+    e.preventDefault();
+    const ltTotal = e.target.previousSibling.value;
+    const gtTotal = e.target.previousSibling.previousSibling.value;
+    setFilterValue((prev) => ({
+      ...prev,
+      total: `${gtTotal}-${ltTotal}`,
+    }));
+  }
+
   return (
     <StyledFilters>
       <InputSelect
@@ -88,6 +105,13 @@ function FilterPurchase({ suppliers, category }) {
       <StyledForm>
         <InputText placeholder="Invoice Number" value={invoiceNumberValue} />
         <Button type="add" onClick={handleFilterInvoiceNumber}>
+          Set
+        </Button>
+      </StyledForm>
+      <StyledForm>
+        <InputText placeholder="Range Total From" value={gtTotalValue} />
+        <InputText placeholder="Range Total To" value={ltTotalValue} />
+        <Button type="add" onClick={handleFilterRangeTotal}>
           Set
         </Button>
       </StyledForm>
