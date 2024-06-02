@@ -23,6 +23,7 @@ import { useSuppliers } from "../suppliers/useSuppliers";
 import InputSelect from "../../ui/InputSelect";
 import Payments from "./Payments";
 import StatusUi from "../../ui/StatusUi";
+import { PURCHASE_CATEGORY } from "../../utils/constants";
 
 const StyledResultTitle = styled.h3`
   text-align: center;
@@ -47,6 +48,7 @@ function Purchase() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterValue, setFilterValue] = useState({
     supplier_id: "",
+    purchase_category: "",
   });
   const [purchaseToEdit, setPurchaseToEdit] = useState({});
   const [showPayments, setShowPayments] = useState(false);
@@ -60,7 +62,7 @@ function Purchase() {
     : "Purchase";
 
   function hasValues(obj) {
-    return Object.values(obj).every((value) => value !== "");
+    return Object.values(obj).some((value) => value !== "");
   }
 
   useEffect(() => {
@@ -69,8 +71,13 @@ function Purchase() {
       setSearchParams(searchParams);
     }
     if (hasValues(filterValue)) {
-      searchParams.set(`${Object.keys(filterValue)}`, filterValue.supplier_id);
-      setSearchParams(searchParams);
+      const newSearchParams = new URLSearchParams();
+      for (const [key, value] of Object.entries(filterValue)) {
+        if (value) {
+          newSearchParams.set(key, value);
+        }
+      }
+      setSearchParams(newSearchParams);
     }
     if (searchQuery || filterValue === "") {
       searchParams.delete("search");
@@ -92,10 +99,17 @@ function Purchase() {
     if (window.confirm("Are you sure?")) deletePur(purId);
   }
 
-  function handleFilter(e) {
+  function handleFilterSuppliers(e) {
     setFilterValue((prev) => ({
       ...prev,
       supplier_id: e.target.value,
+    }));
+  }
+
+  function handleFilterCategory(e) {
+    setFilterValue((prev) => ({
+      ...prev,
+      purchase_category: e.target.value,
     }));
   }
 
@@ -146,9 +160,14 @@ function Purchase() {
           displayOptions="company_name"
           value={suppliers.id}
           selectfor="Supplier"
-          handle={handleFilter}
+          handle={handleFilterSuppliers}
         />
-        <Button type="add" onClick={handleFilter}>
+        <InputSelect
+          resource={PURCHASE_CATEGORY}
+          selectfor="Category"
+          handle={handleFilterCategory}
+        />
+        <Button type="add" onClick={handleFilterSuppliers}>
           Filters
         </Button>
       </StyledFilters>

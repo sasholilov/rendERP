@@ -28,7 +28,12 @@ export async function getPurchases({
   }
 
   if (filter) {
-    query = query.eq("supplier_id", filter);
+    Object.keys(filter).forEach((key) => {
+      const value = filter[key];
+      if (value) {
+        query = query.eq(key, value);
+      }
+    });
   }
 
   if (paymentDetails) {
