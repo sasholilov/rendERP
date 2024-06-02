@@ -4,6 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import InputSelect from "../../ui/InputSelect";
 import PropTypes from "prop-types";
 import InputText from "../../ui/InputText";
+import Button from "../../ui/Button";
 
 const StyledFilters = styled.div`
   display: flex;
@@ -11,6 +12,13 @@ const StyledFilters = styled.div`
   padding-bottom: 0;
   margin: 0;
   margin-bottom: 10px;
+`;
+const StyledForm = styled.form`
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 `;
 
 function FilterPurchase({ suppliers, category }) {
@@ -54,10 +62,11 @@ function FilterPurchase({ suppliers, category }) {
     }));
   }
 
-  function handleFilterInvoice(e) {
+  function handleFilterInvoiceNumber(e) {
+    e.preventDefault();
     setFilterValue((prev) => ({
       ...prev,
-      invoice_number: e.target.value,
+      invoice_number: e.target.previousSibling.value,
     }));
   }
 
@@ -76,11 +85,12 @@ function FilterPurchase({ suppliers, category }) {
         selectfor="Category"
         handle={handleFilterCategory}
       />
-      <InputText
-        placeholder="Invoice Number"
-        onChange={handleFilterInvoice}
-        value={invoiceNumberValue}
-      />
+      <StyledForm>
+        <InputText placeholder="Invoice Number" value={invoiceNumberValue} />
+        <Button type="add" onClick={handleFilterInvoiceNumber}>
+          Set
+        </Button>
+      </StyledForm>
     </StyledFilters>
   );
 }
