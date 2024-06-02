@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useSearchParams } from "react-router-dom";
 import InputSelect from "../../ui/InputSelect";
 import PropTypes from "prop-types";
+import InputText from "../../ui/InputText";
 
 const StyledFilters = styled.div`
   display: flex;
@@ -17,10 +18,12 @@ function FilterPurchase({ suppliers, category }) {
   const [filterValue, setFilterValue] = useState({
     supplier_id: "",
     purchase_category: "",
+    invoice_number: "",
   });
 
   const categoryValue = searchParams.get("purchase_category");
   const supplierId = searchParams.get("supplier_id");
+  const invoiceNumberValue = searchParams.get("invoice_number");
 
   function hasValues(obj) {
     return Object.values(obj).some((value) => value !== "");
@@ -51,6 +54,13 @@ function FilterPurchase({ suppliers, category }) {
     }));
   }
 
+  function handleFilterInvoice(e) {
+    setFilterValue((prev) => ({
+      ...prev,
+      invoice_number: e.target.value,
+    }));
+  }
+
   return (
     <StyledFilters>
       <InputSelect
@@ -65,6 +75,11 @@ function FilterPurchase({ suppliers, category }) {
         resource={category}
         selectfor="Category"
         handle={handleFilterCategory}
+      />
+      <InputText
+        placeholder="Invoice Number"
+        onChange={handleFilterInvoice}
+        value={invoiceNumberValue}
       />
     </StyledFilters>
   );
