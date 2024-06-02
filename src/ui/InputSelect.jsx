@@ -32,7 +32,7 @@ const StyledSelect = styled.select`
 function InputSelect({ selectfor, resource, displayOptions, handle, value }) {
   return (
     <StyledSelect onChange={(e) => handle(e)} defaultValue={value}>
-      <option>Select {selectfor}</option>
+      <option value="">Select {selectfor}</option>
       {displayOptions
         ? resource.map((res) => (
             <option key={res.id} value={res.id}>

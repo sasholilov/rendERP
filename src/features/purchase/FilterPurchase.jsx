@@ -19,6 +19,9 @@ function FilterPurchase({ suppliers, category }) {
     purchase_category: "",
   });
 
+  const categoryValue = searchParams.get("purchase_category");
+  const supplierId = searchParams.get("supplier_id");
+
   function hasValues(obj) {
     return Object.values(obj).some((value) => value !== "");
   }
@@ -48,17 +51,17 @@ function FilterPurchase({ suppliers, category }) {
     }));
   }
 
-  console.log(suppliers, category);
-
   return (
     <StyledFilters>
       <InputSelect
         resource={suppliers}
+        value={supplierId}
         displayOptions="company_name"
         selectfor="Supplier"
         handle={handleFilterSuppliers}
       />
       <InputSelect
+        value={categoryValue}
         resource={category}
         selectfor="Category"
         handle={handleFilterCategory}
