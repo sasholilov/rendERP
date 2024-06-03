@@ -28,6 +28,7 @@ function FilterPurchase({ suppliers, category }) {
     purchase_category: "",
     invoice_number: "",
     total: "",
+    has_vat: "",
   });
 
   const categoryValue = searchParams.get("purchase_category");
@@ -77,6 +78,16 @@ function FilterPurchase({ suppliers, category }) {
     }));
   }
 
+  function handleFilterVat(e) {
+    let hasVatFilter = "";
+    if (e.target.value === "Yes") hasVatFilter = "true";
+    if (e.target.value === "No") hasVatFilter = "false";
+    setFilterValue((prev) => ({
+      ...prev,
+      has_vat: hasVatFilter,
+    }));
+  }
+
   function handleFilterRangeTotal(e) {
     e.preventDefault();
     const ltTotal = e.target.previousSibling.value;
@@ -115,6 +126,11 @@ function FilterPurchase({ suppliers, category }) {
           Set
         </Button>
       </StyledForm>
+      <InputSelect
+        resource={["Yes", "No"]}
+        selectfor="Has Vat"
+        handle={handleFilterVat}
+      />
     </StyledFilters>
   );
 }

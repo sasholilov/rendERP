@@ -13,6 +13,7 @@ export function usePurchase() {
     purchase_category: searchParams.get("purchase_category"),
     invoice_number: searchParams.get("invoice_number"),
     total: searchParams.get("total"),
+    has_vat: searchParams.get("has_vat"),
   };
   const paymentDetails = searchParams.get("details");
   const { isLoading, data, error } = useQuery({
