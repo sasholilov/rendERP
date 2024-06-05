@@ -14,6 +14,7 @@ export function usePurchase() {
     invoice_number: searchParams.get("invoice_number"),
     total: searchParams.get("total"),
     has_vat: searchParams.get("has_vat"),
+    payment_method: searchParams.get("payment_method"),
   };
   const paymentDetails = searchParams.get("details");
   const { isLoading, data, error } = useQuery({

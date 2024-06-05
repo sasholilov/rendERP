@@ -22,7 +22,7 @@ import { useSuppliers } from "../suppliers/useSuppliers";
 import Payments from "./Payments";
 import StatusUi from "../../ui/StatusUi";
 import FilterPurchase from "./FilterPurchase";
-import { PURCHASE_CATEGORY } from "../../utils/constants";
+import { PURCHASE_CATEGORY, PAYMENT_METHODS } from "../../utils/constants";
 
 const StyledResultTitle = styled.h3`
   text-align: center;
@@ -117,7 +117,11 @@ function Purchase() {
       )}
 
       {suppliers && (
-        <FilterPurchase suppliers={suppliers} category={PURCHASE_CATEGORY} />
+        <FilterPurchase
+          suppliers={suppliers}
+          category={PURCHASE_CATEGORY}
+          pmethods={PAYMENT_METHODS}
+        />
       )}
 
       <Table gridtemplatecolumns="1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr">

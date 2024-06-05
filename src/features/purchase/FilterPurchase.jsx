@@ -21,7 +21,7 @@ const StyledForm = styled.form`
   text-align: center;
 `;
 
-function FilterPurchase({ suppliers, category }) {
+function FilterPurchase({ suppliers, category, pmethods }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [filterValue, setFilterValue] = useState({
     supplier_id: "",
@@ -29,6 +29,7 @@ function FilterPurchase({ suppliers, category }) {
     invoice_number: "",
     total: "",
     has_vat: "",
+    payment_method: "",
   });
 
   const categoryValue = searchParams.get("purchase_category");
@@ -40,6 +41,7 @@ function FilterPurchase({ suppliers, category }) {
     gtTotalValue = searchParams.get("total").split("-")[0];
     ltTotalValue = searchParams.get("total").split("-")[1];
   }
+  const paymentMethodsValue = searchParams.get("payment_method");
 
   function hasValues(obj) {
     return Object.values(obj).some((value) => value !== "");
@@ -75,6 +77,13 @@ function FilterPurchase({ suppliers, category }) {
     setFilterValue((prev) => ({
       ...prev,
       invoice_number: e.target.previousSibling.value,
+    }));
+  }
+
+  function handleFilterPayments(e) {
+    setFilterValue((prev) => ({
+      ...prev,
+      payment_method: e.target.value,
     }));
   }
 
@@ -131,13 +140,20 @@ function FilterPurchase({ suppliers, category }) {
         selectfor="Has Vat"
         handle={handleFilterVat}
       />
+      <InputSelect
+        value={paymentMethodsValue}
+        resource={pmethods}
+        selectfor="Payment Methods"
+        handle={handleFilterPayments}
+      />
     </StyledFilters>
   );
 }
 
 FilterPurchase.propTypes = {
   suppliers: PropTypes.any,
-  category: PropTypes.any,
+  category: PropTypes.array,
+  pmethods: PropTypes.array,
 };
 
 export default FilterPurchase;
