@@ -21,7 +21,7 @@ const StyledForm = styled.form`
   text-align: center;
 `;
 
-function FilterPurchase({ suppliers, category, pmethods }) {
+function FilterPurchase({ suppliers, category, pmethods, statuses }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [filterValue, setFilterValue] = useState({
     supplier_id: "",
@@ -30,6 +30,7 @@ function FilterPurchase({ suppliers, category, pmethods }) {
     total: "",
     has_vat: "",
     payment_method: "",
+    status: "",
   });
 
   const categoryValue = searchParams.get("purchase_category");
@@ -42,6 +43,7 @@ function FilterPurchase({ suppliers, category, pmethods }) {
     ltTotalValue = searchParams.get("total").split("-")[1];
   }
   const paymentMethodsValue = searchParams.get("payment_method");
+  const statusValues = searchParams.get("status");
 
   function hasValues(obj) {
     return Object.values(obj).some((value) => value !== "");
@@ -97,6 +99,13 @@ function FilterPurchase({ suppliers, category, pmethods }) {
     }));
   }
 
+  function handleFilterStatus(e) {
+    setFilterValue((prev) => ({
+      ...prev,
+      status: e.target.value,
+    }));
+  }
+
   function handleFilterRangeTotal(e) {
     e.preventDefault();
     const ltTotal = e.target.previousSibling.value;
@@ -146,6 +155,12 @@ function FilterPurchase({ suppliers, category, pmethods }) {
         selectfor="Payment Methods"
         handle={handleFilterPayments}
       />
+      <InputSelect
+        value={statusValues}
+        resource={statuses}
+        selectfor="Status"
+        handle={handleFilterStatus}
+      />
     </StyledFilters>
   );
 }
@@ -154,6 +169,7 @@ FilterPurchase.propTypes = {
   suppliers: PropTypes.any,
   category: PropTypes.array,
   pmethods: PropTypes.array,
+  statuses: PropTypes.any,
 };
 
 export default FilterPurchase;

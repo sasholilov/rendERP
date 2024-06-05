@@ -22,7 +22,11 @@ import { useSuppliers } from "../suppliers/useSuppliers";
 import Payments from "./Payments";
 import StatusUi from "../../ui/StatusUi";
 import FilterPurchase from "./FilterPurchase";
-import { PURCHASE_CATEGORY, PAYMENT_METHODS } from "../../utils/constants";
+import {
+  PURCHASE_CATEGORY,
+  PAYMENT_METHODS,
+  STATUSES,
+} from "../../utils/constants";
 
 const StyledResultTitle = styled.h3`
   text-align: center;
@@ -41,6 +45,7 @@ function Purchase() {
   const [showPayments, setShowPayments] = useState(false);
   const [purchaseDetail, setPurchaseDetail] = useState(0);
   const addModeButton = addMode === true ? "close" : "add";
+  const statuses = Object.values(STATUSES);
 
   const titleMode = addMode
     ? "Purchase - Adding"
@@ -121,6 +126,7 @@ function Purchase() {
           suppliers={suppliers}
           category={PURCHASE_CATEGORY}
           pmethods={PAYMENT_METHODS}
+          statuses={statuses}
         />
       )}
 

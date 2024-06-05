@@ -16,3 +16,8 @@ export const PURCHASE_CATEGORY = [
 ];
 
 export const PAYMENT_METHODS = ["Cash", "Bank", "Card"];
+export const STATUSES = {
+  PAID: "Paid",
+  UNPAID: "Unpaid",
+  PARTIAL: "Partial",
+};

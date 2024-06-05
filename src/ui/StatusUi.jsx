@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { STATUSES } from "../utils/constants";
 
 const StatusUi = styled.div`
   background-color: ${(props) =>
-    props.statusType === "Paid"
+    props.statustype === `${STATUSES.PAID}`
       ? `var(--color-green-1)`
-      : props.statusType === "Unpaid"
+      : props.statustype === `${STATUSES.UNPAID}`
       ? `var(--color-red-1)`
-      : props.statusType === "Partial"
+      : props.statustype === `${STATUSES.PARTIAL}`
       ? `var(--color-yellow-2)`
       : `var(--color-green-1)`};
 
@@ -17,12 +18,12 @@ const StatusUi = styled.div`
   font-weight: 500;
 `;
 
-function Status({ statusType }) {
-  return <Status statustype={statusType} />;
+function Status({ statustype }) {
+  return <Status statustype={statustype} />;
 }
 
 Status.propTypes = {
-  statusType: PropTypes.string,
+  statustype: PropTypes.string,
 };
 
 export default StatusUi;
