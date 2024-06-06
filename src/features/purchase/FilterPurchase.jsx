@@ -5,6 +5,9 @@ import InputSelect from "../../ui/InputSelect";
 import PropTypes from "prop-types";
 import InputText from "../../ui/InputText";
 import Button from "../../ui/Button";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "./custom-datepicker.css";
 
 const StyledFilters = styled.div`
   display: flex;
@@ -23,6 +26,8 @@ const StyledForm = styled.form`
 
 function FilterPurchase({ suppliers, category, pmethods, statuses }) {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [filteredFromDate, setFilteredFromDate] = useState("");
+  const [filteredToDate, setFilteredToDate] = useState("");
   const [filterValue, setFilterValue] = useState({
     supplier_id: "",
     purchase_category: "",
@@ -31,6 +36,7 @@ function FilterPurchase({ suppliers, category, pmethods, statuses }) {
     has_vat: "",
     payment_method: "",
     status: "",
+    purchase_date: "",
   });
 
   const categoryValue = searchParams.get("purchase_category");
@@ -116,6 +122,20 @@ function FilterPurchase({ suppliers, category, pmethods, statuses }) {
     }));
   }
 
+  function handleDateFilter() {
+    const yearFrom = filteredFromDate.split("-")[0];
+    const monthFrom = filteredFromDate.split("-")[1];
+    const dayFrom = filteredFromDate.split("-")[2].slice(0, 2);
+    const yearTo = filteredToDate.split("-")[0];
+    const monthTo = filteredToDate.split("-")[1];
+    const dayTo = filteredToDate.split("-")[2].slice(0, 2);
+
+    setFilterValue((prev) => ({
+      ...prev,
+      purchase_date: `${yearFrom}-${monthFrom}-${dayFrom}--${yearTo}-${monthTo}-${dayTo}`,
+    }));
+  }
+
   return (
     <StyledFilters>
       <InputSelect
@@ -161,6 +181,21 @@ function FilterPurchase({ suppliers, category, pmethods, statuses }) {
         selectfor="Status"
         handle={handleFilterStatus}
       />
+      <DatePicker
+        selected={filteredFromDate}
+        onChange={(date) => setFilteredFromDate(date.toISOString())}
+        dateFormat="MM.dd.yyyy"
+        placeholderText="Select Date"
+      />
+      <DatePicker
+        selected={filteredToDate}
+        onChange={(date) => setFilteredToDate(date.toISOString())}
+        dateFormat="MM.dd.yyyy"
+        placeholderText="Select Date"
+      />
+      <Button type="add" onClick={handleDateFilter}>
+        Set
+      </Button>
     </StyledFilters>
   );
 }

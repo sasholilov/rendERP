@@ -32,14 +32,22 @@ export async function getPurchases({
       const value = filter[key];
       if (value) {
         if (key === "total") {
-          console.log("new");
           const newValues = value.split("-");
           const gtTotal = Number(newValues[0]);
           const ltTotal = Number(newValues[1]);
           query = query.gte(key, gtTotal);
           query = query.lte(key, ltTotal);
+        } else if (key === "purchase_date") {
+          const newValues = value.split("--");
+          const gtTotal = newValues[0];
+          const ltTotal = newValues[1];
+          console.log("here", gtTotal);
+          console.log(value.split("--"));
+          query = query.gte(key, gtTotal);
+          query = query.lte(key, ltTotal);
+        } else {
+          query = query.eq(key, value);
         }
-        if (key != "total") query = query.eq(key, value);
       }
     });
   }
