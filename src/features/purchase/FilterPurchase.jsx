@@ -8,6 +8,7 @@ import Button from "../../ui/Button";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./custom-datepicker.css";
+import { formatDateToISO } from "../../utils/helpers";
 
 const StyledFilters = styled.div`
   display: flex;
@@ -15,6 +16,7 @@ const StyledFilters = styled.div`
   padding-bottom: 0;
   margin: 0;
   margin-bottom: 10px;
+  flex-wrap: wrap;
 `;
 const StyledForm = styled.form`
   display: flex;
@@ -54,6 +56,8 @@ function FilterPurchase({ suppliers, category, pmethods, statuses }) {
   function hasValues(obj) {
     return Object.values(obj).some((value) => value !== "");
   }
+
+  console.log(filteredFromDate);
 
   useEffect(() => {
     if (hasValues(filterValue)) {
@@ -122,7 +126,8 @@ function FilterPurchase({ suppliers, category, pmethods, statuses }) {
     }));
   }
 
-  function handleDateFilter() {
+  function handleDateFilter(e) {
+    e.preventDefault();
     const yearFrom = filteredFromDate.split("-")[0];
     const monthFrom = filteredFromDate.split("-")[1];
     const dayFrom = filteredFromDate.split("-")[2].slice(0, 2);
@@ -182,14 +187,14 @@ function FilterPurchase({ suppliers, category, pmethods, statuses }) {
         handle={handleFilterStatus}
       />
       <DatePicker
+        onChange={(date) => setFilteredFromDate(formatDateToISO(date))}
         selected={filteredFromDate}
-        onChange={(date) => setFilteredFromDate(date.toISOString())}
         dateFormat="MM.dd.yyyy"
         placeholderText="Select Date"
       />
       <DatePicker
+        onChange={(date) => setFilteredToDate(formatDateToISO(date))}
         selected={filteredToDate}
-        onChange={(date) => setFilteredToDate(date.toISOString())}
         dateFormat="MM.dd.yyyy"
         placeholderText="Select Date"
       />
