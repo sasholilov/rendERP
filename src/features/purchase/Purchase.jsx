@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import DeleteIcon from "../../ui/DeleteIcon";
 import EditIcon from "../../ui/EditIcon";
@@ -14,7 +14,6 @@ import { usePurchase } from "./usePurchase";
 import { useSearchParams } from "react-router-dom";
 import { useDeletePurchase } from "./useDeletePurchase";
 import FeatureHeader from "../../ui/FeatureHeader";
-import SearchResult from "../../ui/SearchResult";
 import AddPurchase from "./AddPurchase";
 import EditPurchase from "./EditPurchase";
 import ToggleSwitch from "../../ui/ToggleSwitch";
@@ -40,7 +39,6 @@ function Purchase() {
   const [addMode, setAddMode] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [searchQuery, setSearchQuery] = useState("");
   const [purchaseToEdit, setPurchaseToEdit] = useState({});
   const [showPayments, setShowPayments] = useState(false);
   const [purchaseDetail, setPurchaseDetail] = useState(0);
@@ -52,18 +50,6 @@ function Purchase() {
     : editMode
     ? "Purchase - Editing"
     : "Purchase";
-
-  useEffect(() => {
-    if (searchQuery) {
-      searchParams.set("search", searchQuery);
-      setSearchParams(searchParams);
-    }
-
-    if (searchQuery) {
-      searchParams.delete("search");
-      setSearchParams(searchParams);
-    }
-  }, [searchQuery, searchParams, setSearchParams]);
 
   if (isLoading || isDeleting) return <Spinner />;
 
@@ -109,16 +95,13 @@ function Purchase() {
       <Title>{titleMode}</Title>
       {!editMode && (
         <FeatureHeader
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
           addMode={addMode}
           addModeButton={addModeButton}
           setAddMode={setAddMode}
           feature={"purchase"}
+          showsearch={false}
+          showfilterbtn={true}
         />
-      )}
-      {searchQuery && (
-        <SearchResult feature={purchases} searchQuery={searchQuery} />
       )}
 
       {suppliers && (

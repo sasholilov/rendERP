@@ -82,6 +82,7 @@ function Suppliers() {
           addModeButton={addModeButton}
           setAddMode={setAddMode}
           feature={"supplier"}
+          showsearch={true}
         />
       )}
       {searchQuery && (

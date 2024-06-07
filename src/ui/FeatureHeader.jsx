@@ -18,10 +18,15 @@ function FeatureHeader({
   addMode,
   setAddMode,
   feature,
+  showsearch,
+  showfilterbtn,
 }) {
   return (
     <StyledHeaderBar>
-      <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      {showsearch && (
+        <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      )}
+      {showfilterbtn && <Button type="add">Filters</Button>}
       {!searchQuery && (
         <Button type={addModeButton} onClick={() => setAddMode(!addMode)}>
           {addMode ? "End adding" : `Add new ${feature}`}
@@ -37,6 +42,8 @@ FeatureHeader.propTypes = {
   addMode: PropTypes.bool,
   setAddMode: PropTypes.func,
   feature: PropTypes.string,
+  showsearch: PropTypes.bool,
+  showfilterbtn: PropTypes.bool,
 };
 
 export default FeatureHeader;
