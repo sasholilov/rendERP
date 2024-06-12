@@ -38,6 +38,7 @@ function Purchase() {
   const { isDeleting, deletePur } = useDeletePurchase();
   const [addMode, setAddMode] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [filterMode, setFilterMode] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [purchaseToEdit, setPurchaseToEdit] = useState({});
   const [showPayments, setShowPayments] = useState(false);
@@ -101,10 +102,12 @@ function Purchase() {
           feature={"purchase"}
           showsearch={false}
           showfilterbtn={true}
+          setFilterMode={setFilterMode}
+          filterMode={filterMode}
         />
       )}
 
-      {suppliers && (
+      {suppliers && filterMode && (
         <FilterPurchase
           suppliers={suppliers}
           category={PURCHASE_CATEGORY}

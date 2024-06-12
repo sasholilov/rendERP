@@ -25,11 +25,20 @@ const StyledButton = styled.button`
         ? "none"
         : `var(--color-red-2)`};
   }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 `;
 
-function Button({ type, children, onClick }) {
+function Button({ type, children, onClick, isDisabled }) {
   return (
-    <StyledButton onClick={onClick} type={type}>
+    <StyledButton
+      onClick={onClick}
+      type={type}
+      disabled={isDisabled ? true : false}
+    >
       {children}
     </StyledButton>
   );
@@ -39,6 +48,7 @@ Button.propTypes = {
   type: PropTypes.string,
   children: PropTypes.node.isRequired,
   onClick: PropTypes.func,
+  isDisabled: PropTypes.bool,
 };
 
 export default Button;
