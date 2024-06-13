@@ -39,7 +39,7 @@ function FeatureHeader({
       {showsearch && (
         <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       )}
-      {showfilterbtn && (
+      {showfilterbtn && !addMode && (
         <Button type="add" onClick={() => setFilterMode(!filterMode)}>
           {filterMode ? `Hide Filters` : `Filters`}
         </Button>
