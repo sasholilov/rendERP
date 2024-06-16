@@ -2,8 +2,10 @@ import styled from "styled-components";
 import GlobalStyles from "../../styles/GlobalStyles";
 import loginBgImage from "../../data/images/login-bg.jpg";
 import { StyledInput } from "../../ui/InputText";
+import { StyledButton } from "../../ui/Button";
 
 const LoginBg = styled.div`
+  align-items: center;
   background-image: url(${loginBgImage});
   background-size: cover;
   background-repeat: no-repeat;
@@ -13,10 +15,13 @@ const LoginBg = styled.div`
 `;
 
 const LoginContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   max-width: 500px;
   width: 100%;
   border-radius: 30px;
-  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);
   box-sizing: border-box;
   height: auto;
   padding: 20px;
@@ -57,6 +62,14 @@ const InputPassword = styled.input.attrs({ type: "password" })`
   cursor: text !important;
 `;
 
+const LoginButton = styled(StyledButton)`
+  margin-top: 30px;
+  margin-bottom: 20px;
+  max-width: 150px;
+  width: 100%;
+  align-self: center;
+`;
+
 function LoginForm() {
   return (
     <>
@@ -68,6 +81,7 @@ function LoginForm() {
             <StyledInputText placeholder="E-mail" />
             <InputPassword placeholder="Password" />
           </Form>
+          <LoginButton type="add">Sing In</LoginButton>
         </LoginContainer>
       </LoginBg>
     </>

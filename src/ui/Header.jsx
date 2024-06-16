@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 const StyledHeader = styled.div`
@@ -11,7 +12,12 @@ const StyledHeader = styled.div`
 `;
 
 function Header() {
-  return <StyledHeader>Header</StyledHeader>;
+  return (
+    <StyledHeader>
+      <span>Header</span>
+      <NavLink to="/login">Login</NavLink>
+    </StyledHeader>
+  );
 }
 
 export default Header;

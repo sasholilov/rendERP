@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-const StyledButton = styled.button`
+export const StyledButton = styled.button`
   color: var(--color-light);
   background-color: ${(props) =>
     props.type === "add"
