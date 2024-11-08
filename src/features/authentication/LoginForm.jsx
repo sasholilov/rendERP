@@ -42,6 +42,11 @@ const StyledInputText = styled(StyledInput)`
   max-width: 380px;
   width: 100%;
   position: relative;
+  &:focus {
+    background-color: var(--color-skyblue-1);
+    color: var(--color-light);
+    font-weight: 700;
+  }
 `;
 
 const Form = styled.form`
@@ -60,6 +65,11 @@ const InputPassword = styled.input.attrs({ type: "password" })`
   color: #495057;
   font-size: 1rem !important;
   cursor: text !important;
+  &:focus {
+    background-color: var(--color-skyblue-1);
+    color: var(--color-light);
+    font-weight: 700;
+  }
 `;
 
 const LoginButton = styled(StyledButton)`
